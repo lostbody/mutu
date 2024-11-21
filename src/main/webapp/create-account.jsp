@@ -1,8 +1,3 @@
-<%
-    boolean accountCreated = request.getParameter("accountCreated") != null;
-    boolean emailExists = request.getParameter("error") != null && request.getParameter("error").equals("emailExists");
-%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,44 +65,92 @@
 <body>
 <h2>Create Account</h2>
 
-<% if (accountCreated) { %>
-<span>Account Successfully Created</span>
-<% }
-else {%>
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required/>
 
-    <% if (emailExists) { %>
-        <span style="color: red">Email is already in use. Please try a different one.</span>
-    <% } %>
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" required/>
 
-    <form action="create-account" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required/>
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required/>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required/>
+<label for="birthday">Birthday:</label>
+<input type="date" id="birthday" name="birthday"/>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required/>
+<label for="height">Height (cm):</label>
+<input type="number" id="height" name="height"/>
 
-        <label for="birthday">Birthday:</label>
-        <input type="date" id="birthday" name="birthday" />
+<label for="weight">Weight (kg):</label>
+<input type="number" id="weight" name="weight"/>
 
-        <label for="height">Height (cm):</label>
-        <input type="number" id="height" name="height" />
+<label for="bio">Bio:</label>
+<textarea
+        id="bio"
+        name="bio"
+        rows="4"
+        placeholder="Tell us about yourself..."
+></textarea>
 
-        <label for="weight">Weight (kg):</label>
-        <input type="number" id="weight" name="weight" />
-
-        <label for="bio">Bio:</label>
-        <textarea
-                id="bio"
-                name="bio"
-                rows="4"
-                placeholder="Tell us about yourself..."
-        ></textarea>
-
-        <button type="submit">Create Account</button>
-    </form>
+<button id="createAccountButton" type="submit">Create Account</button>
 </body>
+
+<script>
+
+    const email$ = document.getElementById("email")
+    const password$ = document.getElementById("password")
+    const name$ = document.getElementById("name")
+    const birthday$ = document.getElementById("birthday")
+    const height$ = document.getElementById("height")
+    const weight$ = document.getElementById("weight")
+    const bio$ = document.getElementById("bio")
+    const button$ = document.getElementById("createAccountButton")
+
+    const elements = [email$, password$, name$, birthday$, height$, weight$, bio$]
+
+    function handleAccountCreation() {
+        const params = {
+            email: email$.value,
+            password: password$.value,
+            name: name$.value,
+            birthday: birthday$.value,
+            height: height$.value,
+            weight: weight$.value,
+            bio: bio$.value
+        }
+        const formBody = new URLSearchParams(params).toString()
+
+        fetch("create-account", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formBody
+        })
+            .then(function (response) {
+                return response.json()
+            })
+            .then(function (data) {
+                if (data.error) {
+                    showError(data.error)
+                } else if (data.redirect) {
+                    window.location.href = data.redirect;
+                    ////
+                }
+            })
+    }
+
+    function showError(message) {
+        let errorElement = document.getElementById("error-message");
+        if (!errorElement) {
+            errorElement = document.createElement("span");
+            errorElement.id = "error-message";
+            errorElement.style.color = "red";
+            document.body.insertBefore(errorElement, document.body.firstChild);
+        }
+        errorElement.textContent = message;
+    }
+
+    button$.addEventListener("click", handleAccountCreation)
+
+</script>
 </html>
-<% } %>

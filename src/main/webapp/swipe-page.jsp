@@ -5,6 +5,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.time.LocalDate" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.util.Random" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
   User loggedUser = Authentication.getSessionUser(request);
@@ -13,10 +15,14 @@
     return;
   }
 
-  User other = User.getUserRandom();
+  List<User> otherUsers = User.users.stream()
+          .filter(u -> u.getId() != loggedUser.getId())
+          .collect(Collectors.toList());
+
+  User other = otherUsers.get(new Random().nextInt(otherUsers.size()));
   LocalDate birthday = other.getBirthday();
   Date today = new Date();
-  System.out.println(String.valueOf(today.getYear()) + " " + String.valueOf(birthday.getYear()));
+  System.out.println(today.getYear() + " " + birthday.getYear());
   int age = today.getYear() - birthday.getYear();
 
   List<Picture> pictures = Picture.getPicturesByUserId(other.getId());
@@ -44,6 +50,13 @@
       .pictures {
         display: flex;
         align-items: center;
+      }
+
+      .avatar {
+        width: 150px; /* Set the desired fixed width */
+        height: 200px; /* Set the desired fixed height */
+        object-fit: cover; /* Ensures the image fits without distortion */
+        display: block; /* Ensures proper alignment */
       }
 
       .interests {
@@ -81,10 +94,10 @@
         </div>
         <div class="image-container">
           <img
-            style="width: 200px; height: 200px"
-            src="static/img/andreas-profile.jpg"
-            alt="andreas-profile-pic"
-            title="andreas-profile-pic"
+            class="avatar"
+            src="<%= Picture.getAvatarByUserId(other.getId()) %>"
+            alt="<%= other.getName() %>"
+            title="<%= other.getName() %>"
           />
         </div>
         <div>
@@ -99,10 +112,14 @@
       </div>
 
       <div class="centered">
-        <form method="POST" action="swipe-left">
+        <form method="POST" action="swipe">
+          <input name="other-user-id" type="hidden" value="<%= other.getId() %>" />
+          <input name="swipe-direction" type="hidden" value="SWIPE-LEFT" />
           <button type="submit"><span>No</span></button>
         </form>
-        <form method="POST" action="swipe-right">
+        <form method="POST" action="swipe">
+          <input name="other-user-id" type="hidden" value="<%= other.getId() %>" />
+          <input name="swipe-direction" type="hidden" value="SWIPE-RIGHT" />
           <button type="submit"><span>Yes</span></button>
         </form>
       </div>

@@ -84,24 +84,53 @@
 <span style="color: green;">Account updated successfully!</span>
 <% } %>
 
-<form method="POST" action="account-settings">
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" value="<%=loggedUser.getPassword()%> "required/>
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" value="<%=loggedUser.getPassword()%> " required/>
 
-    <label for="height">Height (cm):</label>
-    <input type="number" id="height" name="height" value="<%=loggedUser.getHeight()%>" />
+<label for="height">Height (cm):</label>
+<input type="number" id="height" name="height" value="<%=loggedUser.getHeight()%>"/>
 
-    <label for="weight">Weight (kg):</label>
-    <input type="number" id="weight" name="weight" value="<%=loggedUser.getWeight()%>" />
+<label for="weight">Weight (kg):</label>
+<input type="number" id="weight" name="weight" value="<%=loggedUser.getWeight()%>"/>
 
-    <label for="bio">Bio:</label>
-    <textarea
-            id="bio"
-            name="bio"
-            rows="4"
-            placeholder="Tell us about yourself..."><%=loggedUser.getBio() %></textarea>
-
-    <button type="submit">Update Account</button>
-</form>
+<label for="bio">Bio:</label>
+<textarea
+        id="bio"
+        name="bio"
+        rows="4"
+        placeholder="Tell us about yourself..."><%=loggedUser.getBio() %></textarea>
 </body>
+
+<script>
+
+    const password$ = document.getElementById("password")
+    const height$ = document.getElementById("height")
+    const weight$ = document.getElementById("weight")
+    const bio$ = document.getElementById("bio")
+
+    const elements = [password$, height$, weight$, bio$]
+
+    function handleInput() {
+        const params = {
+            password: password$.value,
+            height: height$.value,
+            weight: weight$.value,
+            bio: bio$.value,
+        }
+        const formBody = new URLSearchParams(params).toString()
+
+        fetch("account-settings", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formBody,
+        })
+    }
+
+    for (const element$ of elements) {
+        element$.addEventListener("input", handleInput)
+    }
+
+</script>
 </html>

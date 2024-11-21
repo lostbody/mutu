@@ -11,15 +11,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static gr.aueb.cf.mutu.models.User.getUserByCredentials;
 import static gr.aueb.cf.mutu.models.User.users;
 
 @WebServlet("/create-account")
 public class CreateAccount extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        boolean accountCreated = false;
 
         //παίρνουμε τα πεδία της φόρμας που έχει βάλει ο User και είναι πάνω στο request μέσω του getParameter
         String email = request.getParameter("email");
@@ -30,8 +27,15 @@ public class CreateAccount extends HttpServlet {
 
         //redirect with an error if the email already exists
 
+//        if (emailExists) {
+//            response.sendRedirect("create-account.jsp?error=emailExists");
+//            return;
+//        }
+
         if (emailExists) {
-            response.sendRedirect("create-account.jsp?error=emailExists");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 Bad Request
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Email already exists\"}");
             return;
         }
 
@@ -40,10 +44,6 @@ public class CreateAccount extends HttpServlet {
         String name = request.getParameter("name");
         String birthdayStr = request.getParameter("birthday");
 
-        //τα τυπώνουμε στην κονσόλα του server
-        System.out.println("email=" + email + " password=" + password + " name=" + name + " birthday=" + birthdayStr);
-
-
         //τα μετατρέπω στον κατάλληλο τυπο ώστε να δημιουργησω ένα instance της κλασης User κ να τα βάλω
         //
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -51,16 +51,16 @@ public class CreateAccount extends HttpServlet {
 
 
         //δημιουργώ το instance και τα περναω μέσα και ξανατυπωνω στην κονσολα για να βεβαιωθω
-        User user = new User(1, email, password, name, birthday, null, null, null);
-
-
-        System.out.println(user.toString());
+        User user = new User(email, password, name, birthday, null, null, null);
 
         users.add(user);
 
         Authentication.createUserSession(user, response);
 
-        response.sendRedirect("swipe-page.jsp");
-    }
+        // Return a success response
+        response.setStatus(HttpServletResponse.SC_OK); // 200 OK
+        response.setContentType("application/json");
+        response.getWriter().write("{\"message\": \"Account created successfully\", \"redirect\": \"swipe-page.jsp\"}");
 
+    }
 }

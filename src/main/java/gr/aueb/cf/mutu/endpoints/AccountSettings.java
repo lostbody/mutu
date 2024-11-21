@@ -29,8 +29,24 @@ public class AccountSettings extends HttpServlet {
         String bio = request.getParameter("bio");
 
         // Convert and update user fields
-        int height = Integer.parseInt(heightStr);
-        int weight = Integer.parseInt(weightStr);
+        int height;
+        try {
+            height = Integer.parseInt(heightStr);
+        }
+        catch (NumberFormatException e) {
+            response.setStatus(400);
+            return;
+        }
+
+        int weight;
+
+        try {
+            weight = Integer.parseInt(weightStr);
+        }
+        catch (NumberFormatException e) {
+            response.setStatus(400);
+            return;
+        }
 
         // Update the logged user's information with the values we get from the form
         // which are retrieved from the request.getParameter... (see above)
@@ -38,9 +54,6 @@ public class AccountSettings extends HttpServlet {
         loggedUser.setHeight(height);
         loggedUser.setWeight(weight);
         loggedUser.setBio(bio);
-
-        // Redirect back to the settings page with a success message
-        response.sendRedirect("account-settings.jsp?updateSuccess=1");
     }
 
 }

@@ -12,7 +12,10 @@ public class UserInterest {
         userInterests.add(new UserInterest(2, 1, 2));
         userInterests.add(new UserInterest(3, 1, 3));
         userInterests.add(new UserInterest(4, 2, 1));
-        userInterests.add(new UserInterest(5, 2, 2));
+        userInterests.add(new UserInterest(5, 3, 2));
+        userInterests.add(new UserInterest(6, 3, 1));
+        userInterests.add(new UserInterest(7, 4, 1));
+        userInterests.add(new UserInterest(8, 5, 5));
     }
 
     public static List<UserInterest> getUserInterestsByUserId(int userId) {

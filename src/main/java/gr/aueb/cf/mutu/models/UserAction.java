@@ -14,6 +14,7 @@ public class UserAction {
     static {
         userActions.add(new UserAction(1, 2, Action.SWIPE_RIGHT, Action.SWIPE_RIGHT));
         userActions.add(new UserAction(1, 3, Action.SWIPE_RIGHT, Action.SWIPE_RIGHT));
+        userActions.add(new UserAction(4, 5, Action.SWIPE_RIGHT, Action.SWIPE_RIGHT));
     }
 
     public static List<User> getMatchesByUserId(int userId) {
@@ -27,6 +28,14 @@ public class UserAction {
                     return User.getById(matchId);
                 })
                 .collect(Collectors.toList());
+    }
+
+    public static UserAction getByUserIds(int user1Id, int user2Id) {
+        return userActions
+                .stream()
+                .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user1 == user2Id && x.user2 == user1Id))
+                .findFirst()
+                .orElse(null);
     }
 
     private final int user1;

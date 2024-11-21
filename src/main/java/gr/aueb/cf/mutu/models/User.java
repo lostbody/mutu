@@ -1,12 +1,9 @@
 package gr.aueb.cf.mutu.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 public class User {
-    static Random rand = new Random();
 
     public static List<User> users = new ArrayList<>();
     static {
@@ -14,6 +11,7 @@ public class User {
         users.add(new User(2, "rodia@rodia.com", "rodia","Rodia", LocalDate.of(1991 - 1900, 10 - 1, 15),160, null, "loremipsum"));
         users.add(new User(3, "dora@dora.com", "dora","Dora", LocalDate.of(1995 - 1900, 11 - 1, 22),160, null, "loremipsum"));
         users.add(new User(4, "kostis@kostis.com", "kostis","Kostis", LocalDate.of(1988 - 1900, 10 - 1, 24),183, null, "loremipsum"));
+        users.add(new User(5, "andreas@andreas.com", "andreas", "Andreas", LocalDate.of(1991 - 1900, 4 - 1, 24), 175, null, "loremipsum"));
     }
 
     public static User getById(int userId) {
@@ -22,12 +20,6 @@ public class User {
                 .filter(u -> u.id == userId)
                 .findFirst()
                 .orElse(null);
-    }
-
-    //φτιάχνουμε έναν User user random από τη λίστα των users.
-    public static User getUserRandom() {
-        int index = rand.nextInt(users.size());
-        return users.get(index);
     }
 
     public static User getUserByCredentials(String email, String password) {
@@ -52,6 +44,17 @@ public class User {
         this.password = password;
         this.name = name;
         this.birthday = birthday;
+        this.height = height;
+        this.weight = weight;
+        this.bio = bio;
+    }
+
+    public User(String email, String password, String name, LocalDate birthday,  Integer height, Integer weight, String bio) {
+        this.id = users.size() + 1;
+        this.email = email;
+        this.name = name;
+        this.birthday = birthday;
+        this.password = password;
         this.height = height;
         this.weight = weight;
         this.bio = bio;

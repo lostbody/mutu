@@ -11,6 +11,8 @@ public class Interest {
         interests.add(new Interest(1, "dnd"));
         interests.add(new Interest(2, "baseball"));
         interests.add(new Interest(3, "gaming"));
+        interests.add(new Interest(4, "bridge"));
+        interests.add(new Interest(5, "tennis"));
     }
 
     //μια μέθοδος που μας επιστρέφει Interest interest από το List<Interest> όταν της δίνουμε
