@@ -22,4 +22,11 @@ public class MessageDao implements IMessageDao {
         return messageSent.toDto();
     }
 
+    @Override
+    public List<MessageDto> getConversationByUserIds(long user1Id, long user2Id) {
+        return Message.getConversationByUserIds(user1Id, user2Id).stream()
+                .map(Message::toDto)
+                .collect(Collectors.toList());
+    }
+
 }

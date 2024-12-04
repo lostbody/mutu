@@ -10,4 +10,10 @@ public interface IUserDao {
     UserDto createUser(String email, String password, String name, LocalDate birthday, Integer height, Integer weight, String bio);
 
     void updateUser(UserDto loggedUser);
+
+    UserDto getByEmail(String email);
+
+    UserDto getPotentialMatch(long id);
+
+    UserDto getById(int matchId);
 }

@@ -2,7 +2,6 @@ package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
 import gr.aueb.cf.mutu.dto.UserDto;
-import gr.aueb.cf.mutu.models_dev.User;
 import gr.aueb.cf.mutu.service.UserService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,8 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import static gr.aueb.cf.mutu.models_dev.User.users;
 
 @WebServlet("/create-account")
 public class CreateAccount extends HttpServlet {
@@ -25,7 +22,7 @@ public class CreateAccount extends HttpServlet {
 
         //checking if the email given already exists
 
-        boolean emailExists = users.stream().anyMatch(u -> u.getEmail().equals(email));
+        UserDto existingUser = UserService.getImpl().getByEmail(email);
 
         //redirect with an error if the email already exists
 
@@ -34,7 +31,7 @@ public class CreateAccount extends HttpServlet {
 //            return;
 //        }
 
-        if (emailExists) {
+        if (existingUser != null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 Bad Request
             response.setContentType("application/json");
             response.getWriter().write("{\"error\": \"Email already exists\"}");

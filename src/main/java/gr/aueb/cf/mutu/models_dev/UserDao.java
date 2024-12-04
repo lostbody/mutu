@@ -4,6 +4,9 @@ import gr.aueb.cf.mutu.dao.IUserDao;
 import gr.aueb.cf.mutu.dto.UserDto;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import static gr.aueb.cf.mutu.models_dev.User.users;
 
@@ -28,5 +31,25 @@ public class UserDao implements IUserDao {
         user.setHeight(loggedUser.getHeight());
         user.setWeight(loggedUser.getWeight());
         user.setBio(loggedUser.getBio());
+    }
+
+    @Override
+    public UserDto getByEmail(String email) {
+        User user = User.getByEmail(email);
+        return user == null ? null : user.toDto();
+    }
+
+    @Override
+    public UserDto getPotentialMatch(long id) {
+        List<User> otherUsers = User.users.stream()
+                .filter(u -> u.getId() != id)
+                .collect(Collectors.toList());
+        return otherUsers.get(new Random().nextInt(otherUsers.size())).toDto();
+    }
+
+    @Override
+    public UserDto getById(int matchId) {
+        User user = User.getById(matchId);
+        return user == null ? null : user.toDto();
     }
 }

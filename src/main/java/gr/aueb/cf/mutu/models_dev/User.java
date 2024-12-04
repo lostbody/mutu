@@ -24,6 +24,14 @@ public class User {
                 .orElse(null);
     }
 
+    public static User getByEmail(String email) {
+        return users
+                .stream()
+                .filter(u -> u.email.equals(email))
+                .findFirst()
+                .orElse(null);
+    }
+
     public static User getUserByCredentials(String email, String password) {
         return users
             .stream()

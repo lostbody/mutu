@@ -2,7 +2,6 @@ package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
 import gr.aueb.cf.mutu.dto.UserDto;
-import gr.aueb.cf.mutu.models_dev.User;
 import gr.aueb.cf.mutu.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

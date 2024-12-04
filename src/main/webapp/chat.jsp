@@ -1,10 +1,12 @@
-<%@ page import="gr.aueb.cf.mutu.models_dev.User" %>
 <%@ page import="gr.aueb.cf.mutu.Authentication" %>
 <%@ page import="java.util.List" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.Message" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.Picture" %>
+<%@ page import="gr.aueb.cf.mutu.dto.UserDto" %>
+<%@ page import="gr.aueb.cf.mutu.dto.MessageDto" %>
+<%@ page import="gr.aueb.cf.mutu.service.MessageService" %>
+<%@ page import="gr.aueb.cf.mutu.service.PictureService" %>
+<%@ page import="gr.aueb.cf.mutu.service.UserService" %>
 <%
-    User loggedUser = Authentication.getSessionUser(request);
+    UserDto loggedUser = Authentication.getSessionUser(request);
     if (loggedUser == null) {
         response.sendRedirect("login.jsp");
         return;
@@ -18,9 +20,9 @@
         return;
     }
 
-    User match = User.getById(matchId);
+    UserDto match = UserService.getImpl().getById(matchId);
 
-    List<Message> messages = Message.getConversationByUserIds(loggedUser.getId(), matchId);
+    List<MessageDto> messages = MessageService.getImpl().getConversationByUserIds(loggedUser.getId(), matchId);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +45,7 @@
         <div class="card-body d-flex align-items-center gap-3">
             <img
                 class="avatar rounded-circle"
-                src="<%= Picture.getAvatarByUserId(matchId) %>"
+                src="<%= PictureService.getImpl().getAvatarByUserId(matchId) %>"
                 alt="<%= match.getName() %>"
                 title="<%= match.getName() %>"
             />
@@ -52,7 +54,7 @@
         </div>
 
         <div class="d-flex w-100 flex-column align-items-start p-3 pt-0">
-            <% for (Message message : messages) {
+            <% for (MessageDto message : messages) {
                 String style = loggedUser.getId() == message.getUser1() ? "bg-primary align-self-end" : "bg-secondary";
             %>
                 <div class="message rounded-pill px-3 py-2 text-white my-1 <%= style %>">

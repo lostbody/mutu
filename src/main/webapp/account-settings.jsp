@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.User" %>
 <%@ page import="gr.aueb.cf.mutu.Authentication" %>
+<%@ page import="gr.aueb.cf.mutu.dto.UserDto" %>
 <%
-    User loggedUser = Authentication.getSessionUser(request);
+    UserDto loggedUser = Authentication.getSessionUser(request);
     if (loggedUser == null) {
         response.sendRedirect("login.jsp");
         return;

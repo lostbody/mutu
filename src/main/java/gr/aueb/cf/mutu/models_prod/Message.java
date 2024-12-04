@@ -17,14 +17,14 @@ public class Message {
         messages.add(new Message(8, 2, 4, "How are you?", 16000));
     }
 
-    public static List<Message> getConversationByUserIds(int user1Id, int user2Id) {
+    public static List<Message> getConversationByUserIds(long user1Id, long user2Id) {
         return messages
                 .stream()
                 .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user2 == user1Id && x.user1 == user2Id))
                 .collect(Collectors.toList());
     }
 
-    public static List<Message> getNewMessagesByUserIds(int user1Id, int user2Id, long since) {
+    public static List<Message> getNewMessagesByUserIds(long user1Id, long user2Id, long since) {
         return messages
                 .stream()
                 .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user2 == user1Id && x.user1 == user2Id))
@@ -32,13 +32,13 @@ public class Message {
                 .collect(Collectors.toList());
     }
 
-    private int id;
-    private int user1;
-    private int user2;
+    private long id;
+    private long user1;
+    private long user2;
     private String content;
     private long timestamp;
 
-    public Message(int id, int user1, int user2, String content, long timestamp) {
+    public Message(long id, long user1, long user2, String content, long timestamp) {
         this.id = id;
         this.user1 = user1;
         this.user2 = user2;
@@ -46,7 +46,7 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public Message(int user1, int user2, String content, long timestamp) {
+    public Message(long user1, long user2, String content, long timestamp) {
         this.id = messages.size() + 1;
         this.user1 = user1;
         this.user2 = user2;
@@ -54,7 +54,7 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public int getUser1() {
+    public long getUser1() {
         return user1;
     }
 

@@ -14,9 +14,9 @@ public class Interest {
         interests.add(new Interest(5, "tennis"));
     }
 
-    //μια μέθοδος που μας επιστρέφει Interest interest από το List<Interest> όταν της δίνουμε
-    // σαν όρισμα ένα interestId αντιστοιχίζοντας το στο id της κλάσης Interest. Tο interestId είναι
-    // foreign key σε άλλο class-table που σχετίζεται με το Interest. Ο UserDto έχει πολλά
+    //μια μέθοδος που μας επιστρέφει InterestDto interest από το List<InterestDto> όταν της δίνουμε
+    // σαν όρισμα ένα interestId αντιστοιχίζοντας το στο id της κλάσης InterestDto. Tο interestId είναι
+    // foreign key σε άλλο class-table που σχετίζεται με το InterestDto. Ο UserDto έχει πολλά
     //interests οπότε έχει το πεδίο interestId ως foreignkey ωστε να μπορούμε να τα αντιστοιχήσουμε σε ένα
     // join table.
 
@@ -28,7 +28,7 @@ public class Interest {
                 .orElse(null);
     }
 
-    //εδώ έχουμε μια μέθοδο για να παίρνουμε ένα List<Interest> δίνονταν το id ενός user.
+    //εδώ έχουμε μια μέθοδο για να παίρνουμε ένα List<InterestDto> δίνονταν το id ενός user.
     //Χρησιμοποιουμε την κλάση UserInterest και το πεδίο userId που είναι foreignkey για να αντιστοιχίζεται με
     //τους users.
 
@@ -62,7 +62,7 @@ public class Interest {
 
     @Override
     public String toString() {
-        return "Interest{" +
+        return "InterestDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

@@ -9,4 +9,6 @@ public interface IMessageDao {
     List<MessageDto> getNewMessagesByUserIds (long userId, long matchId, long since);
     MessageDto createMessage (long userId, long matchId, String content, long timestamp);
 
+    List<MessageDto> getConversationByUserIds(long user1Id, long user2Id);
+
 }

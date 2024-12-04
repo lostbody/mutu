@@ -1,32 +1,30 @@
-<%@ page import="gr.aueb.cf.mutu.models_dev.User" %>
 <%@ page import="gr.aueb.cf.mutu.Authentication" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.Picture" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.Interest" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="java.util.stream.Collectors" %>
-<%@ page import="java.util.Random" %>
+<%@ page import="gr.aueb.cf.mutu.dto.UserDto" %>
+<%@ page import="gr.aueb.cf.mutu.service.UserService" %>
+<%@ page import="gr.aueb.cf.mutu.dto.PictureDto" %>
+<%@ page import="gr.aueb.cf.mutu.service.PictureService" %>
+<%@ page import="gr.aueb.cf.mutu.dto.InterestDto" %>
+<%@ page import="gr.aueb.cf.mutu.service.InterestService" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
-    User loggedUser = Authentication.getSessionUser(request);
+    UserDto loggedUser = Authentication.getSessionUser(request);
     if (loggedUser == null) {
         response.sendRedirect("login.jsp");
         return;
     }
 
-    List<User> otherUsers = User.users.stream()
-            .filter(u -> u.getId() != loggedUser.getId())
-            .collect(Collectors.toList());
+    UserDto other = UserService.getImpl().getPotentialMatch(loggedUser.getId());
 
-    User other = otherUsers.get(new Random().nextInt(otherUsers.size()));
     LocalDate birthday = other.getBirthday();
     Date today = new Date();
     System.out.println(today.getYear() + " " + birthday.getYear());
     int age = today.getYear() - birthday.getYear();
 
-    List<Picture> pictures = Picture.getPicturesByUserId(other.getId());
-    List<Interest> interests = Interest.getInterestsByUserId(other.getId());
+    List<PictureDto> pictures = PictureService.getImpl().getPicturesByUserId(other.getId());
+    List<InterestDto> interests = InterestService.getImpl().getInterestsByUserId(other.getId());
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +54,7 @@
 
                 </button>
                 <div class="image-container">
-                    <% for (Picture picture : pictures) { %>
+                    <% for (PictureDto picture : pictures) { %>
                     <img class="avatar d-none w-100 h-100" src="<%= picture.getBlob() %>" alt="<%= other.getName() %>"/>
                     <% } %>
                 </div>
@@ -95,7 +93,7 @@
             <div class="d-flex mt-2">
                 <div class="p-1 ps-0"><strong>Interests:</strong></div>
                 <div class="d-flex flex-wrap gap-2">
-                    <% for (Interest interest : interests) { %>
+                    <% for (InterestDto interest : interests) { %>
                     <span class="p-1 border rounded"><%= interest.getName() %></span>
                     <% } %>
                 </div>

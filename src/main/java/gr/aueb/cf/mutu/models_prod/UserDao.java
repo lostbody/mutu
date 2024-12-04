@@ -20,4 +20,19 @@ public class UserDao implements IUserDao {
     public void updateUser(UserDto loggedUser) {
 
     }
+
+    @Override
+    public UserDto getByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public UserDto getPotentialMatch(long id) {
+        return null;
+    }
+
+    @Override
+    public UserDto getById(int matchId) {
+        return null;
+    }
 }

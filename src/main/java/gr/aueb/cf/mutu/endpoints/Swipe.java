@@ -1,13 +1,13 @@
 package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
+import gr.aueb.cf.mutu.dto.UserActionDto;
 import gr.aueb.cf.mutu.dto.UserDto;
-import gr.aueb.cf.mutu.models_dev.User;
-import gr.aueb.cf.mutu.models_dev.UserAction;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import gr.aueb.cf.mutu.service.UserActionService;
 
 import java.io.IOException;
 
@@ -30,14 +30,14 @@ public class Swipe extends HttpServlet {
             return;
         }
 
-        UserAction userAction = UserAction.getByUserIds(loggedUser.getId(), otherUserId);
+        UserActionDto userAction = UserActionService.getImpl().getByUserIds(loggedUser.getId(), otherUserId);
         String typedAction = request.getParameter("swipe-direction");
 
-        UserAction.Action action;
+        UserActionDto.Action action;
         if (typedAction.equals("SWIPE-LEFT")) {
-            action = UserAction.Action.SWIPE_LEFT;
+            action = UserActionDto.Action.SWIPE_LEFT;
         } else{
-            action = UserAction.Action.SWIPE_RIGHT;
+            action = UserActionDto.Action.SWIPE_RIGHT;
         }
 
         if (userAction != null) {
@@ -46,10 +46,9 @@ public class Swipe extends HttpServlet {
             } else {
                 userAction.setUser2_action(action);
             }
-            // updateUserAction
+            UserActionService.getImpl().updateUserAction(userAction);
         } else {
-            userAction = new UserAction(loggedUser.getId(), otherUserId, action, null);
-            UserAction.userActions.add(userAction);
+            UserActionService.getImpl().createUserAction(loggedUser.getId(), otherUserId, action, null);
         }
 
         response.sendRedirect("swipe-page.jsp");

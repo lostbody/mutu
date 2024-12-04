@@ -17,4 +17,9 @@ public class MessageDao implements IMessageDao {
         return null;
     }
 
+    @Override
+    public List<MessageDto> getConversationByUserIds(long user1Id, long user2Id) {
+        return null;
+    }
+
 }

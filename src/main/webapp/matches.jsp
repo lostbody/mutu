@@ -1,17 +1,17 @@
 <%@ page import="gr.aueb.cf.mutu.Authentication" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.User" %>
 <%@ page import="java.util.List" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.UserAction" %>
-<%@ page import="gr.aueb.cf.mutu.models_dev.Picture" %>
+<%@ page import="gr.aueb.cf.mutu.dto.UserDto" %>
+<%@ page import="gr.aueb.cf.mutu.service.UserActionService" %>
+<%@ page import="gr.aueb.cf.mutu.service.PictureService" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
-    User loggedUser = Authentication.getSessionUser(request);
+    UserDto loggedUser = Authentication.getSessionUser(request);
     if (loggedUser == null) {
         response.sendRedirect("login.jsp");
         return;
     }
 
-    List<User> matches = UserAction.getMatchesByUserId(loggedUser.getId());
+    List<UserDto> matches = UserActionService.getImpl().getMatchesByUserId(loggedUser.getId());
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,14 +35,14 @@
     </div>
 
     <div class="d-flex gap-3 flex-column mt-3">
-        <% for (User match : matches) { %>
+        <% for (UserDto match : matches) { %>
             <div class="border rounded p-2">
                 <a href="chat.jsp?match=<%= match.getId() %>">
                     <div class="d-flex gap-3 align-items-center">
                         <div>
                             <img
                                     class="avatar rounded-circle"
-                                    src="<%= Picture.getAvatarByUserId(match.getId()) %>"
+                                    src="<%= PictureService.getImpl().getAvatarByUserId(match.getId()) %>"
                                     alt="<%= match.getName() %>"
                                     title="<%= match.getName() %>"
                             />

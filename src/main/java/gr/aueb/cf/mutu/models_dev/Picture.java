@@ -1,5 +1,7 @@
 package gr.aueb.cf.mutu.models_dev;
 
+import gr.aueb.cf.mutu.dto.PictureDto;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,14 +19,14 @@ public class Picture {
         pictures.add(new Picture(7, "pic1", 100, 100, "static/img/andreas-profile-pic.jpg", 5));
     }
 
-    public static List<Picture> getPicturesByUserId(int userId) {
+    public static List<Picture> getPicturesByUserId(long userId) {
         return pictures
                 .stream()
                 .filter(p -> p.userId == userId)
                 .collect(Collectors.toList());
     }
 
-    public static String getAvatarByUserId(int userId) {
+    public static String getAvatarByUserId(long userId) {
         return pictures
                 .stream()
                 .filter(p -> p.userId == userId)
@@ -33,14 +35,14 @@ public class Picture {
                 .orElse("static/img/no-profile-pic.jpg");
     }
 
-    private int id;
-    private String filename;
-    private int width;
-    private int height;
-    private String blob;
-    private int userId;
+    private final long id;
+    private final String filename;
+    private final int width;
+    private final int height;
+    private final String blob;
+    private final long userId;
 
-    public Picture(int id, String filename, int width, int height, String blob, int userId) {
+    public Picture(long id, String filename, int width, int height, String blob, long userId) {
         this.id = id;
         this.filename = filename;
         this.width = width;
@@ -49,59 +51,30 @@ public class Picture {
         this.userId = userId;
     }
 
-    public static List<Picture> getPictures() {
-        return pictures;
-    }
-
-    public static void setPictures(List<Picture> pictures) {
-        Picture.pictures = pictures;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFilename() {
         return filename;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
     public int getWidth() {
         return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public String getBlob() {
         return blob;
     }
 
-    public void setBlob(String blob) {
-        this.blob = blob;
-    }
-
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    PictureDto toDto() { return new PictureDto(id, filename, width, height, blob, userId); }
+
 }

@@ -1,33 +1,28 @@
 package gr.aueb.cf.mutu.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class UserAction {
+public class UserActionDto {
     public enum Action {
         SWIPE_LEFT,
         SWIPE_RIGHT
     }
 
-
-    private final int user1;
-    private final int user2;
+    private final long user1;
+    private final long user2;
     private Action user1_action;
     private Action user2_action;
 
-    public UserAction(int user1, int user2, Action user1_action, Action user2_action) {
+    public UserActionDto(long user1, long user2, Action user1_action, Action user2_action) {
         this.user1 = user1;
         this.user2 = user2;
         this.user1_action = user1_action;
         this.user2_action = user2_action;
     }
 
-    public int getUser1() {
+    public long getUser1() {
         return user1;
     }
 
-    public int getUser2() {
+    public long getUser2() {
         return user2;
     }
 

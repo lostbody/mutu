@@ -1,5 +1,7 @@
 package gr.aueb.cf.mutu.models_dev;
 
+import gr.aueb.cf.mutu.dto.InterestDto;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,13 +16,13 @@ public class Interest {
         interests.add(new Interest(5, "tennis"));
     }
 
-    //μια μέθοδος που μας επιστρέφει Interest interest από το List<Interest> όταν της δίνουμε
-    // σαν όρισμα ένα interestId αντιστοιχίζοντας το στο id της κλάσης Interest. Tο interestId είναι
-    // foreign key σε άλλο class-table που σχετίζεται με το Interest. Ο UserDto έχει πολλά
+    //μια μέθοδος που μας επιστρέφει InterestDto interest από το List<InterestDto> όταν της δίνουμε
+    // σαν όρισμα ένα interestId αντιστοιχίζοντας το στο id της κλάσης InterestDto. Tο interestId είναι
+    // foreign key σε άλλο class-table που σχετίζεται με το InterestDto. Ο UserDto έχει πολλά
     //interests οπότε έχει το πεδίο interestId ως foreignkey ωστε να μπορούμε να τα αντιστοιχήσουμε σε ένα
     // join table.
 
-    public static Interest getInterestById(int interestId) {
+    public static Interest getInterestById(long interestId) {
         return interests
                 .stream()
                 .filter(i -> i.id == interestId)
@@ -28,11 +30,11 @@ public class Interest {
                 .orElse(null);
     }
 
-    //εδώ έχουμε μια μέθοδο για να παίρνουμε ένα List<Interest> δίνονταν το id ενός user.
+    //εδώ έχουμε μια μέθοδο για να παίρνουμε ένα List<InterestDto> δίνονταν το id ενός user.
     //Χρησιμοποιουμε την κλάση UserInterest και το πεδίο userId που είναι foreignkey για να αντιστοιχίζεται με
     //τους users.
 
-    public static List<Interest> getInterestsByUserId(int userId) {
+    public static List<Interest> getInterestsByUserId(long userId) {
         List<UserInterest> userInterests = UserInterest.getUserInterestsByUserId(userId);
         return userInterests
                 .stream()
@@ -40,15 +42,15 @@ public class Interest {
                 .collect(Collectors.toList());
     }
 
-    private final int id;
-    private String name;
+    private final long id;
+    private final String name;
 
-    public Interest(int id, String name) {
+    public Interest(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -56,15 +58,15 @@ public class Interest {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
-        return "Interest{" +
+        return "InterestDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public InterestDto toDto() {
+        return new InterestDto(id, name);
     }
 }
