@@ -1,4 +1,4 @@
-package gr.aueb.cf.mutu.models;
+package gr.aueb.cf.mutu.models_dev;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +17,20 @@ public class UserAction {
         userActions.add(new UserAction(4, 5, Action.SWIPE_RIGHT, Action.SWIPE_RIGHT));
     }
 
-    public static List<User> getMatchesByUserId(int userId) {
+    public static List<User> getMatchesByUserId(long userId) {
         return userActions
                 .stream()
                 .filter(x -> (x.user1 == userId || x.user2 == userId)
                         && x.user1_action == Action.SWIPE_RIGHT
                         && x.user2_action == Action.SWIPE_RIGHT)
                 .map(x -> {
-                    int matchId = x.user1 == userId ? x.user2 : x.user1;
+                    long matchId = x.user1 == userId ? x.user2 : x.user1;
                     return User.getById(matchId);
                 })
                 .collect(Collectors.toList());
     }
 
-    public static UserAction getByUserIds(int user1Id, int user2Id) {
+    public static UserAction getByUserIds(long user1Id, long user2Id) {
         return userActions
                 .stream()
                 .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user1 == user2Id && x.user2 == user1Id))
@@ -38,23 +38,23 @@ public class UserAction {
                 .orElse(null);
     }
 
-    private final int user1;
-    private final int user2;
+    private final long user1;
+    private final long user2;
     private Action user1_action;
     private Action user2_action;
 
-    public UserAction(int user1, int user2, Action user1_action, Action user2_action) {
+    public UserAction(long user1, long user2, Action user1_action, Action user2_action) {
         this.user1 = user1;
         this.user2 = user2;
         this.user1_action = user1_action;
         this.user2_action = user2_action;
     }
 
-    public int getUser1() {
+    public long getUser1() {
         return user1;
     }
 
-    public int getUser2() {
+    public long getUser2() {
         return user2;
     }
 

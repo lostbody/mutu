@@ -1,4 +1,6 @@
-package gr.aueb.cf.mutu.models;
+package gr.aueb.cf.mutu.models_dev;
+import gr.aueb.cf.mutu.dto.UserDto;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ public class User {
         users.add(new User(5, "andreas@andreas.com", "andreas", "Andreas", LocalDate.of(1991 - 1900, 4 - 1, 24), 175, null, "loremipsum"));
     }
 
-    public static User getById(int userId) {
+    public static User getById(long userId) {
         return users
                 .stream()
                 .filter(u -> u.id == userId)
@@ -29,7 +31,7 @@ public class User {
             .findFirst()
             .orElse(null);
     }
-    private final int id;
+    private final long id;
     private final String email;
     private final String name;
     private final LocalDate birthday;
@@ -38,7 +40,7 @@ public class User {
     private Integer weight;
     private String bio;
 
-    public User(int id, String email, String password, String name, LocalDate birthday, Integer height, Integer weight, String bio) {
+    public User(long id, String email, String password, String name, LocalDate birthday, Integer height, Integer weight, String bio) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -60,7 +62,7 @@ public class User {
         this.bio = bio;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -110,7 +112,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDto{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
@@ -120,5 +122,9 @@ public class User {
                 ", weight=" + weight +
                 ", bio='" + bio + '\'' +
                 '}';
+    }
+
+    public UserDto toDto() {
+        return new UserDto(id, email, password, name, birthday, height, weight, bio);
     }
 }

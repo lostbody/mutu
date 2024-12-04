@@ -1,6 +1,7 @@
 package gr.aueb.cf.mutu;
 
-import gr.aueb.cf.mutu.models.User;
+import gr.aueb.cf.mutu.dto.UserDto;
+import gr.aueb.cf.mutu.models_dev.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,13 +13,13 @@ public class Authentication {
 
     static SecureRandom rand = new SecureRandom();
 
-    public static HashMap<String, User> sessions = new HashMap<>();
+    public static HashMap<String, UserDto> sessions = new HashMap<>();
 
     //Στo hashmap sessions αποθηκεύουμε (user-token), δηλαδή όλους τους users
     //που έχουν κάνει login μαζί με ένα token που τους δώσαμε όταν έκαναν login.
 
-    public static User getSessionUser(HttpServletRequest request) {
-        User loggedUser = null;
+    public static UserDto getSessionUser(HttpServletRequest request) {
+        UserDto loggedUser = null;
 
         //παίρνει τα cookies (header) του request που έρχεται από τον browser και τα βάζει
         //σε ένα table Cookies. Μετά διατρέχει το table Cookies για να βρει αν υπάρχει κάποιο cookie
@@ -37,7 +38,7 @@ public class Authentication {
         }
 
         if (loggedUser == null) {
-            System.out.println("User not found in sessions.");
+            System.out.println("UserDto not found in sessions.");
         } else {
             System.out.println("Found user: " + loggedUser.getEmail());
         }
@@ -45,7 +46,7 @@ public class Authentication {
         return loggedUser;
     }
 
-    public static void createUserSession(User user, HttpServletResponse response) {
+    public static void createUserSession(UserDto user, HttpServletResponse response) {
         String token;
         do {
             token = String.format("%06d", rand.nextInt(1_000_000));

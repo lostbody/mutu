@@ -1,98 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <jsp:include page="head.jsp"/>
     <title>Create Account</title>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-            rel="stylesheet"
-    />
     <style>
-        body {
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-            margin: 20px;
-        }
-
-        form {
-            max-width: 400px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: orange;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="number"],
-        input[type="date"],
-        textarea {
-            width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        textarea {
-            resize: vertical;
-        }
-
-        button {
-            padding: 10px 15px;
-            background-color: #4caf50;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
 
     </style>
 </head>
 
 <body>
-<h2>Create Account</h2>
 
-<label for="email">Email:</label>
-<input type="email" id="email" name="email" required/>
+<div class="container">
 
-<label for="password">Password:</label>
-<input type="password" id="password" name="password" required/>
+    <div class="card shadow-lg my-3">
+        <div class="card-header">
+            <span><strong>Create Account</strong></span>
+        </div>
 
-<label for="name">Name:</label>
-<input type="text" id="name" name="name" required/>
+        <div class="card-body">
+            <form method="POST" action="create-account" class="d-flex flex-column">
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" name="email" required/>
+                </div>
 
-<label for="birthday">Birthday:</label>
-<input type="date" id="birthday" name="birthday"/>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" id="password" name="password" required/>
+                </div>
 
-<label for="height">Height (cm):</label>
-<input type="number" id="height" name="height"/>
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" name="name" required/>
+                </div>
 
-<label for="weight">Weight (kg):</label>
-<input type="number" id="weight" name="weight"/>
+                <div class="mb-3">
+                    <label class="form-label" for="birthday">Birthday</label>
+                    <input class="form-control" type="date" id="birthday" name="birthday"/>
+                </div>
 
-<label for="bio">Bio:</label>
-<textarea
-        id="bio"
-        name="bio"
-        rows="4"
-        placeholder="Tell us about yourself..."
-></textarea>
+                <div class="mb-3">
+                    <label class="form-label" for="height">Height (cm)</label>
+                    <input class="form-control" type="number" id="height" name="height"/>
+                </div>
 
-<button id="createAccountButton" type="submit">Create Account</button>
+                <div class="mb-3">
+                    <label class="form-label" for="weight">Weight (kg)</label>
+                    <input class="form-control" type="number" id="weight" name="weight"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="bio">Bio</label>
+                    <textarea class="form-control"
+                              id="bio"
+                              name="bio"
+                              rows="4"
+                              placeholder="Tell us about yourself..."
+                    ></textarea>
+                </div>
+
+                <button class="btn btn-outline-secondary align-self-end" id="createAccountButton" type="submit">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+</div>
 </body>
+
+
 
 <script>
 

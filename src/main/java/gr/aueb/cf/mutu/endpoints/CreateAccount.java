@@ -1,7 +1,9 @@
 package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
-import gr.aueb.cf.mutu.models.User;
+import gr.aueb.cf.mutu.dto.UserDto;
+import gr.aueb.cf.mutu.models_dev.User;
+import gr.aueb.cf.mutu.service.UserService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,14 +13,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static gr.aueb.cf.mutu.models.User.users;
+import static gr.aueb.cf.mutu.models_dev.User.users;
 
 @WebServlet("/create-account")
 public class CreateAccount extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        //παίρνουμε τα πεδία της φόρμας που έχει βάλει ο User και είναι πάνω στο request μέσω του getParameter
+        //παίρνουμε τα πεδία της φόρμας που έχει βάλει ο UserDto και είναι πάνω στο request μέσω του getParameter
         String email = request.getParameter("email");
 
         //checking if the email given already exists
@@ -44,16 +46,14 @@ public class CreateAccount extends HttpServlet {
         String name = request.getParameter("name");
         String birthdayStr = request.getParameter("birthday");
 
-        //τα μετατρέπω στον κατάλληλο τυπο ώστε να δημιουργησω ένα instance της κλασης User κ να τα βάλω
+        //τα μετατρέπω στον κατάλληλο τυπο ώστε να δημιουργησω ένα instance της κλασης UserDto κ να τα βάλω
         //
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthday = LocalDate.parse(birthdayStr, formatter);  // Convert to LocalDate
 
 
         //δημιουργώ το instance και τα περναω μέσα και ξανατυπωνω στην κονσολα για να βεβαιωθω
-        User user = new User(email, password, name, birthday, null, null, null);
-
-        users.add(user);
+        UserDto user = UserService.getImpl().createUser(email, password, name, birthday, null, null, null);
 
         Authentication.createUserSession(user, response);
 

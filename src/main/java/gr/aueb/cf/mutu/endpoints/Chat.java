@@ -1,8 +1,9 @@
 package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
-import gr.aueb.cf.mutu.models.Message;
-import gr.aueb.cf.mutu.models.User;
+import gr.aueb.cf.mutu.dto.MessageDto;
+import gr.aueb.cf.mutu.service.MessageService;
+import gr.aueb.cf.mutu.dto.UserDto;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,65 +13,13 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import static gr.aueb.cf.mutu.models.Message.messages;
-
 @WebServlet("/chat")
 public class Chat extends HttpServlet {
 
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        User loggedUser = Authentication.getSessionUser(request);
-//
-//        if (loggedUser == null) {
-//            // If no user is logged in, redirect to the login page
-////            response.sendRedirect("login.jsp");
-//            return;
-//        }
-//
-//        int matchId;
-//        try {
-//            matchId = Integer.parseInt(request.getParameter("match"));
-//        }
-//        catch (NumberFormatException e) {
-//            response.setStatus(400);
-//            return;
-//        }
-//
-//        int since;
-//        try {
-//            since = Integer.parseInt(request.getParameter("since"));
-//        }
-//        catch (NumberFormatException e) {
-//            response.setStatus(400);
-//            return;
-//        }
-//
-//        List<Message> messages = Message.getNewMessagesByUserIds(loggedUser.getId(), matchId, since);
-//
-//        response.setContentType("application/json");
-//
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("[");
-//        for (Message message : messages) {
-//            sb.append(message.toJson());
-//            sb.append(",");
-//        }
-//
-//        if (messages.size() > 0) {
-//            sb.deleteCharAt(sb.length()-1);
-//        }
-//        sb.append("]");
-//
-//        Writer writer = response.getWriter();
-//        writer.write(sb.toString());
-//    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        User loggedUser = Authentication.getSessionUser(request);
-
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserDto loggedUser = Authentication.getSessionUser(request);
         if (loggedUser == null) {
-            // If no user is logged in, redirect to the login page
-            response.sendRedirect("login.jsp");
+            response.setStatus(401);
             return;
         }
 
@@ -79,16 +28,59 @@ public class Chat extends HttpServlet {
             matchId = Integer.parseInt(request.getParameter("match"));
         }
         catch (NumberFormatException e) {
-            response.sendRedirect("matches.jsp");
+            System.out.println("A");
+            return;
+        }
+
+        long since;
+        try {
+            since = Long.parseLong(request.getParameter("since"));
+        }
+        catch (NumberFormatException e) {
+            response.setStatus(400);
+            return;
+        }
+
+        List<MessageDto> messages = MessageService.getImpl().getNewMessagesByUserIds(loggedUser.getId(), matchId, since);
+
+        response.setContentType("application/json");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (MessageDto message : messages) {
+            sb.append(message.toJson());
+            sb.append(",");
+        }
+
+        if (messages.size() > 0) {
+            sb.deleteCharAt(sb.length()-1);
+        }
+        sb.append("]");
+
+        Writer writer = response.getWriter();
+        writer.write(sb.toString());
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserDto loggedUser = Authentication.getSessionUser(request);
+        if (loggedUser == null) {
+            response.setStatus(401);
+            return;
+        }
+
+        int matchId;
+        try {
+            matchId = Integer.parseInt(request.getParameter("match"));
+        }
+        catch (NumberFormatException e) {
+            response.setStatus(400);
             return;
         }
 
         String messageTyped = request.getParameter("messageTyped");
-        Message messageSent = new Message(loggedUser.getId(),matchId, messageTyped, System.currentTimeMillis() );
-        messages.add(messageSent);
+        MessageDto messageSent = MessageService.getImpl().createMessage(loggedUser.getId(),matchId, messageTyped, System.currentTimeMillis());
 
         response.setContentType("application/json");
         response.getWriter().write(messageSent.toJson());
-
     }
 }

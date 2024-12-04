@@ -1,4 +1,4 @@
-package gr.aueb.cf.mutu.models;
+package gr.aueb.cf.mutu.models_prod;
 
 import java.util.ArrayList;
 import java.util.List;

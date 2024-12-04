@@ -4,19 +4,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <jsp:include page="head.jsp"/>
     <title>Mutu</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          integrity="sha256-PI8n5gCcz9cQqQXm3PEtDuPG8qx9oFsFctPg0S5zb8g=" crossorigin="anonymous">
     <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
         .container {
             width: 400px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
         }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 100%;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input::placeholder {
+            color: #6c757d; /* Light gray for placeholder text */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
@@ -33,12 +88,10 @@
         <% } %>
         <form method="POST" action="login">
             <div>
-                <label for="email"><span>email</span></label>
-                <input type="email" name="email" id="email"/>
+                <input type="email" name="email" id="email" placeholder="Email"/>
             </div>
             <div>
-                <label for="password"><span>password</span></label>
-                <input type="password" name="pass" id="password"/>
+                <input type="password" name="pass" id="password" placeholder="Password"/>
             </div>
             <div>
                 <button type="submit"><span>login</span></button>

@@ -1,8 +1,9 @@
 package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
-import gr.aueb.cf.mutu.models.User;
-import gr.aueb.cf.mutu.models.UserAction;
+import gr.aueb.cf.mutu.dto.UserDto;
+import gr.aueb.cf.mutu.models_dev.User;
+import gr.aueb.cf.mutu.models_dev.UserAction;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,9 +14,7 @@ import java.io.IOException;
 @WebServlet("/swipe")
 public class Swipe extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        User loggedUser = Authentication.getSessionUser(request);
-
+        UserDto loggedUser = Authentication.getSessionUser(request);
         if (loggedUser == null) {
             // If no user is logged in, redirect to the login page
             response.sendRedirect("login.jsp");
@@ -47,6 +46,7 @@ public class Swipe extends HttpServlet {
             } else {
                 userAction.setUser2_action(action);
             }
+            // updateUserAction
         } else {
             userAction = new UserAction(loggedUser.getId(), otherUserId, action, null);
             UserAction.userActions.add(userAction);

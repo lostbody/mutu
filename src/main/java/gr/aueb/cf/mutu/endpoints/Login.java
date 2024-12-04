@@ -1,34 +1,34 @@
 package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
-import gr.aueb.cf.mutu.models.User;
+import gr.aueb.cf.mutu.dto.UserDto;
+import gr.aueb.cf.mutu.models_dev.User;
+import gr.aueb.cf.mutu.service.UserService;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.security.SecureRandom;
 
 @WebServlet("/login")
 public class Login extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        //παίρνουμε τα πεδία της φόρμας που έχει βάλει ο User και είναι πάνω στο request μέσω του getParameter
+        //παίρνουμε τα πεδία της φόρμας που έχει βάλει ο UserDto και είναι πάνω στο request μέσω του getParameter
         String email = request.getParameter("email");
         String password = request.getParameter("pass");
 
         //τα τυπώνουμε στην κονσόλα του server
         System.out.println("email=" + email + " password=" + password);
 
-        //φτιάχνουμε έναν User user χρησιμοποιώντας το model (κλάση User) και τη μέθοδο getUserByCredentials
+        //φτιάχνουμε έναν UserDto user χρησιμοποιώντας το model (κλάση UserDto) και τη μέθοδο getUserByCredentials
         //που μας επιστρέφει τον user από τη λίστα users ο οποίος έχει το username και το password
         //που πήραμε από τη φόρμα.Αν δεν βρεθεί user με το αυτό το username και password θα δημιουργθεί ένας
         //null user.
 
-        User user = User.getUserByCredentials(email, password);
+        UserDto user = UserService.getImpl().getUserByCredentials(email, password);
 
         //Αν βρεθεί user στη list users, αν δηλαδή "user != null", δημιουργούμε ένα string με όνομα token.
         //Δίνουμε σε αυτό το string μια random ακέραιη τιμή από το 0 έως το 999.9999

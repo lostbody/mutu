@@ -1,10 +1,8 @@
-package gr.aueb.cf.mutu.models;
+package gr.aueb.cf.mutu.models_prod;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static gr.aueb.cf.mutu.models.Interest.interests;
 
 public class Message {
     public static List<Message> messages = new ArrayList<>();
@@ -26,7 +24,7 @@ public class Message {
                 .collect(Collectors.toList());
     }
 
-    public static List<Message> getNewMessagesByUserIds(int user1Id, int user2Id, int since) {
+    public static List<Message> getNewMessagesByUserIds(int user1Id, int user2Id, long since) {
         return messages
                 .stream()
                 .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user2 == user1Id && x.user1 == user2Id))
@@ -70,7 +68,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "MessageDto{" +
                 "id=" + id +
                 ", user1=" + user1 +
                 ", user2=" + user2 +

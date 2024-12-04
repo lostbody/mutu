@@ -1,7 +1,6 @@
-package gr.aueb.cf.mutu.models;
+package gr.aueb.cf.mutu.models_dev;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,7 @@ public class Interest {
 
     //μια μέθοδος που μας επιστρέφει Interest interest από το List<Interest> όταν της δίνουμε
     // σαν όρισμα ένα interestId αντιστοιχίζοντας το στο id της κλάσης Interest. Tο interestId είναι
-    // foreign key σε άλλο class-table που σχετίζεται με το Interest. Ο User έχει πολλά
+    // foreign key σε άλλο class-table που σχετίζεται με το Interest. Ο UserDto έχει πολλά
     //interests οπότε έχει το πεδίο interestId ως foreignkey ωστε να μπορούμε να τα αντιστοιχήσουμε σε ένα
     // join table.
 

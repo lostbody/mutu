@@ -1,4 +1,4 @@
-<%@ page import="gr.aueb.cf.mutu.models.User" %>
+<%@ page import="gr.aueb.cf.mutu.models_dev.User" %>
 <%@ page import="gr.aueb.cf.mutu.Authentication" %>
 <%  //ψάχνει να βρει αν υπάρχει user στο hashmap sessions. Δηλαδή αν έχει ξαναμπει αυτός ο user και εχει token
 

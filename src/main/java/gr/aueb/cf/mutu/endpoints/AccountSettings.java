@@ -1,7 +1,9 @@
 package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
-import gr.aueb.cf.mutu.models.User;
+import gr.aueb.cf.mutu.dto.UserDto;
+import gr.aueb.cf.mutu.models_dev.User;
+import gr.aueb.cf.mutu.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,8 +16,7 @@ import java.io.IOException;
 public class AccountSettings extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        User loggedUser = Authentication.getSessionUser(request);
-
+        UserDto loggedUser = Authentication.getSessionUser(request);
         if (loggedUser == null) {
             // If no user is logged in, redirect to the login page
             response.sendRedirect("login.jsp");
@@ -54,6 +55,8 @@ public class AccountSettings extends HttpServlet {
         loggedUser.setHeight(height);
         loggedUser.setWeight(weight);
         loggedUser.setBio(bio);
+
+        UserService.getImpl().updateUser(loggedUser);
     }
 
 }
