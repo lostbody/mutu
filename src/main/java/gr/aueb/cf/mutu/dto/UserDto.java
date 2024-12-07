@@ -1,8 +1,5 @@
 package gr.aueb.cf.mutu.dto;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserDto {
 
     private final long id;

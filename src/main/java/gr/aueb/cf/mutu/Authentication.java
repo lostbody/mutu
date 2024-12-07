@@ -1,7 +1,6 @@
 package gr.aueb.cf.mutu;
 
 import gr.aueb.cf.mutu.dto.UserDto;
-import gr.aueb.cf.mutu.models_dev.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

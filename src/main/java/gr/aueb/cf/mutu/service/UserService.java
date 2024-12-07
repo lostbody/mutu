@@ -1,6 +1,5 @@
 package gr.aueb.cf.mutu.service;
 
-import gr.aueb.cf.mutu.dao.IMessageDao;
 import gr.aueb.cf.mutu.dao.IUserDao;
 
 public class UserService {

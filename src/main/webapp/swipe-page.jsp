@@ -20,7 +20,6 @@
 
     LocalDate birthday = other.getBirthday();
     Date today = new Date();
-    System.out.println(today.getYear() + " " + birthday.getYear());
     int age = today.getYear() - birthday.getYear();
 
     List<PictureDto> pictures = PictureService.getImpl().getPicturesByUserId(other.getId());

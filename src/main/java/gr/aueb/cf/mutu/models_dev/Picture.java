@@ -12,7 +12,6 @@ public class Picture {
     static {
         pictures.add(new Picture(1, "pic1", 100, 100, "static/img/gina-profile-pic.jpg",  1));
         pictures.add(new Picture(2, "pic1", 100, 100, "static/img/rodia-profile-pic.jpg",  2));
-        pictures.add(new Picture(3, "pic1", 100, 100, "blobpic",  2));
         pictures.add(new Picture(4, "pic1", 100, 100, "static/img/dora-profile-pic.jpg",  3));
         pictures.add(new Picture(5, "pic1", 100, 100, "static/img/dora-profile-pic2.jpg",  3));
         pictures.add(new Picture(6, "pic1", 100, 100, "static/img/dora-profile-pic3.jpg",  3));
