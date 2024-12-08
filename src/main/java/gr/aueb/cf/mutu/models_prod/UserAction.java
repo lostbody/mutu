@@ -1,5 +1,7 @@
 package gr.aueb.cf.mutu.models_prod;
 
+import gr.aueb.cf.mutu.models_dev.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
