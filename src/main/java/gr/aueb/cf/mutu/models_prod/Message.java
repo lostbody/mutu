@@ -1,85 +1,91 @@
 package gr.aueb.cf.mutu.models_prod;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "messages")
 public class Message {
-    public static List<Message> messages = new ArrayList<>();
-    static {
-        messages.add(new Message(1, 1, 2, "Hello there!", 12000));
-        messages.add(new Message(2, 1, 2, "How are you?", 13000));
-        messages.add(new Message(3, 2, 1, "Fine, thank you!", 14000));
-        messages.add(new Message(4, 1, 2, "Are you free tonight?", 15000));
-        messages.add(new Message(5, 3, 4, "Hello!", 15000));
-        messages.add(new Message(6, 4, 3, "How are you?", 16000));
-        messages.add(new Message(7, 5, 4, "Hi!", 16000));
-        messages.add(new Message(8, 2, 4, "How are you?", 16000));
-    }
 
-    public static List<Message> getConversationByUserIds(long user1Id, long user2Id) {
-        return messages
-                .stream()
-                .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user2 == user1Id && x.user1 == user2Id))
-                .collect(Collectors.toList());
-    }
-
-    public static List<Message> getNewMessagesByUserIds(long user1Id, long user2Id, long since) {
-        return messages
-                .stream()
-                .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user2 == user1Id && x.user1 == user2Id))
-                .filter(x -> (x.timestamp > since))
-                .collect(Collectors.toList());
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long user1;
-    private long user2;
+
+    @ManyToOne
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id", nullable = false)
+    private User receiver;
+    @Column(nullable = false)
+
     private String content;
-    private long timestamp;
+    @Column(nullable = false)
 
-    public Message(long id, long user1, long user2, String content, long timestamp) {
+    private LocalDateTime timestamp;
+
+    public Message() {
+    }
+
+    public Message(long id, User sender, User receiver, String content, LocalDateTime timestamp) {
         this.id = id;
-        this.user1 = user1;
-        this.user2 = user2;
+        this.sender = sender;
+        this.receiver = receiver;
         this.content = content;
         this.timestamp = timestamp;
     }
 
-    public Message(long user1, long user2, String content, long timestamp) {
-        this.id = messages.size() + 1;
-        this.user1 = user1;
-        this.user2 = user2;
-        this.content = content;
-        this.timestamp = timestamp;
+    public Message(User sender, User receiver, String s, LocalDateTime now) {
     }
 
-    public long getUser1() {
-        return user1;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public String getContent() {
         return content;
     }
 
-    public long getTimestamp() {
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    @Override
-    public String toString() {
-        return "MessageDto{" +
-                "id=" + id +
-                ", user1=" + user1 +
-                ", user2=" + user2 +
-                ", content='" + content + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String toJson() {
         return "{" +
-                "\"sender\":" + user1 + "," +
+                "\"sender\":" + sender + "," +
                 "\"content\":" + "\"" + content + "\"" + "," +
                 "\"timestamp\":" + timestamp +
                 "}";

@@ -1,9 +1,13 @@
 package gr.aueb.cf.mutu.models_prod;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "interests")
 public class Interest {
     public static List<Interest> interests = new ArrayList<>();
     static {
@@ -40,7 +44,11 @@ public class Interest {
                 .collect(Collectors.toList());
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final long id;
+
+    @Column(nullable = false, unique = true)
     private String name;
 
     public Interest(long id, String name) {
