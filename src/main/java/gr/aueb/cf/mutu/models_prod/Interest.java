@@ -20,7 +20,7 @@ public class Interest {
     //interests οπότε έχει το πεδίο interestId ως foreignkey ωστε να μπορούμε να τα αντιστοιχήσουμε σε ένα
     // join table.
 
-    public static Interest getInterestById(int interestId) {
+    public static Interest getInterestById(long interestId) {
         return interests
                 .stream()
                 .filter(i -> i.id == interestId)
@@ -32,7 +32,7 @@ public class Interest {
     //Χρησιμοποιουμε την κλάση UserInterest και το πεδίο userId που είναι foreignkey για να αντιστοιχίζεται με
     //τους users.
 
-    public static List<Interest> getInterestsByUserId(int userId) {
+    public static List<Interest> getInterestsByUserId(long userId) {
         List<UserInterest> userInterests = UserInterest.getUserInterestsByUserId(userId);
         return userInterests
                 .stream()
@@ -40,15 +40,15 @@ public class Interest {
                 .collect(Collectors.toList());
     }
 
-    private final int id;
+    private final long id;
     private String name;
 
-    public Interest(int id, String name) {
+    public Interest(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -18,23 +18,23 @@ public class UserInterest {
         userInterests.add(new UserInterest(8, 5, 5));
     }
 
-    public static List<UserInterest> getUserInterestsByUserId(int userId) {
+    public static List<UserInterest> getUserInterestsByUserId(long userId) {
         return userInterests
                 .stream()
                 .filter(x -> x.userId == userId)
                 .collect(Collectors.toList());
     }
-    private int id;
-    private int userId;
-    private int interestId;
+    private long id;
+    private long userId;
+    private long interestId;
 
-    public UserInterest(int id, int userId, int interestId) {
+    public UserInterest(long id, long userId, long interestId) {
         this.id = id;
         this.userId = userId;
         this.interestId = interestId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -42,7 +42,7 @@ public class UserInterest {
         this.id = id;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
@@ -50,11 +50,11 @@ public class UserInterest {
         this.userId = userId;
     }
 
-    public int getInterestId() {
+    public long getInterestId() {
         return interestId;
     }
 
-    public void setInterestId(int interestId) {
+    public void setInterestId(long interestId) {
         this.interestId = interestId;
     }
 }

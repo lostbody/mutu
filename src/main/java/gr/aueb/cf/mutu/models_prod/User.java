@@ -39,6 +39,10 @@ public class User {
         this.bio = bio;
     }
 
+    public User() {
+
+    }
+
 //    public User(String email, String password, String name, LocalDate birthday,  Integer height, Integer weight, String bio) {
 //        this.id = users.size() + 1;
 //        this.email = email;
