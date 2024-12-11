@@ -1,67 +1,46 @@
 package gr.aueb.cf.mutu.models_prod;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import jakarta.persistence.*;
+@Entity
+@Table(name = "pictures")
 public class Picture {
 
-    public static List<Picture> pictures = new ArrayList<>();
-    static {
-        pictures.add(new Picture(1, "pic1", 100, 100, "static/img/gina-profile-pic.jpg",  1));
-        pictures.add(new Picture(2, "pic1", 100, 100, "static/img/rodia-profile-pic.jpg",  2));
-        pictures.add(new Picture(3, "pic1", 100, 100, "blobpic",  2));
-        pictures.add(new Picture(4, "pic1", 100, 100, "static/img/dora-profile-pic.jpg",  3));
-        pictures.add(new Picture(5, "pic1", 100, 100, "static/img/dora-profile-pic2.jpg",  3));
-        pictures.add(new Picture(6, "pic1", 100, 100, "static/img/dora-profile-pic3.jpg",  3));
-        pictures.add(new Picture(7, "pic1", 100, 100, "static/img/andreas-profile-pic.jpg", 5));
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public static List<Picture> getPicturesByUserId(int userId) {
-        return pictures
-                .stream()
-                .filter(p -> p.userId == userId)
-                .collect(Collectors.toList());
-    }
-
-    public static String getAvatarByUserId(int userId) {
-        return pictures
-                .stream()
-                .filter(p -> p.userId == userId)
-                .map(x -> x.blob)
-                .findFirst()
-                .orElse("static/img/no-profile-pic.jpg");
-    }
-
-    private int id;
+    @Column(nullable = false)
     private String filename;
-    private int width;
-    private int height;
-    private String blob;
-    private int userId;
 
-    public Picture(int id, String filename, int width, int height, String blob, int userId) {
-        this.id = id;
+    @Column(nullable = false)
+    private int width;
+
+    @Column(nullable = false)
+    private int height;
+
+    @Column(nullable = false)
+    private String imageData;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public Picture() {}
+
+    // Parameterized constructor
+    public Picture(String filename, int width, int height, String imageData, User user) {
         this.filename = filename;
         this.width = width;
         this.height = height;
-        this.blob = blob;
-        this.userId = userId;
+        this.imageData = imageData;
+        this.user = user;
     }
 
-    public static List<Picture> getPictures() {
-        return pictures;
-    }
-
-    public static void setPictures(List<Picture> pictures) {
-        Picture.pictures = pictures;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -89,19 +68,19 @@ public class Picture {
         this.height = height;
     }
 
-    public String getBlob() {
-        return blob;
+    public String getImageData() {
+        return imageData;
     }
 
-    public void setBlob(String blob) {
-        this.blob = blob;
+    public void setImageData(String imageData) {
+        this.imageData = imageData;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

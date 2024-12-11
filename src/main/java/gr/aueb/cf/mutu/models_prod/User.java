@@ -2,7 +2,9 @@ package gr.aueb.cf.mutu.models_prod;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-
+import java.util.HashSet;
+import java.util.Set;
+import gr.aueb.cf.mutu.models_prod.Interest;
 @Entity
 @Table(name = "users")
 public class User {
@@ -27,9 +29,27 @@ public class User {
     private Integer height;
 
     @Column
+    private Integer weight;
+
+    @Column
     private String bio;
 
-    // Getters and Setters
+    @ManyToMany
+    @JoinTable(
+            name = "user_interests",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "interest_id")
+    )
+    private Set<Interest> interests = new HashSet<>();
+
+    public Set<Interest> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(Set<Interest> interests) {
+        this.interests = interests;
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getEmail() { return email; }
@@ -42,6 +62,12 @@ public class User {
     public void setPassword(String password) { this.password = password; }
     public Integer getHeight() { return height; }
     public void setHeight(Integer height) { this.height = height; }
+    public Integer getWeight() {
+        return weight;
+    }
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
     public String getBio() { return bio; }
     public void setBio(String bio) { this.bio = bio; }
 }

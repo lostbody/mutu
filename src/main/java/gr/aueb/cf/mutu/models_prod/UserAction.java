@@ -1,78 +1,83 @@
 package gr.aueb.cf.mutu.models_prod;
 
-import gr.aueb.cf.mutu.models_dev.User;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
+@Entity
+@Table(name = "user_actions")
 public class UserAction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user1_id", nullable = false)
+    private User user1;
+
+    @ManyToOne
+    @JoinColumn(name = "user2_id", nullable = false)
+    private User user2;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user1_action", nullable = false)
+    private Action user1Action;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user2_action", nullable = false)
+    private Action user2Action;
+
     public enum Action {
         SWIPE_LEFT,
         SWIPE_RIGHT
     }
 
-    public static List<UserAction> userActions = new ArrayList<>();
-    static {
-        userActions.add(new UserAction(1, 2, Action.SWIPE_RIGHT, Action.SWIPE_RIGHT));
-        userActions.add(new UserAction(1, 3, Action.SWIPE_RIGHT, Action.SWIPE_RIGHT));
-        userActions.add(new UserAction(4, 5, Action.SWIPE_RIGHT, Action.SWIPE_RIGHT));
-    }
+    public UserAction() {}
 
-    public static List<User> getMatchesByUserId(long userId) {
-        return userActions
-                .stream()
-                .filter(x -> (x.user1 == userId || x.user2 == userId)
-                        && x.user1_action == Action.SWIPE_RIGHT
-                        && x.user2_action == Action.SWIPE_RIGHT)
-                .map(x -> {
-                    long matchId = x.user1 == userId ? x.user2 : x.user1;
-                    return User.getById(matchId);
-                })
-                .collect(Collectors.toList());
-    }
-
-    public static UserAction getByUserIds(long user1Id, long user2Id) {
-        return userActions
-                .stream()
-                .filter(x -> (x.user1 == user1Id && x.user2 == user2Id) || (x.user1 == user2Id && x.user2 == user1Id))
-                .findFirst()
-                .orElse(null);
-    }
-
-    private final long user1;
-    private final long user2;
-    private Action user1_action;
-    private Action user2_action;
-
-    public UserAction(long user1, long user2, Action user1_action, Action user2_action) {
+    public UserAction(User user1, User user2, Action user1Action, Action user2Action) {
         this.user1 = user1;
         this.user2 = user2;
-        this.user1_action = user1_action;
-        this.user2_action = user2_action;
+        this.user1Action = user1Action;
+        this.user2Action = user2Action;
     }
 
-    public long getUser1() {
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser1() {
         return user1;
     }
 
-    public long getUser2() {
+    public void setUser1(User user1) {
+        this.user1 = user1;
+    }
+
+    public User getUser2() {
         return user2;
     }
 
-    public Action getUser1_action() {
-        return user1_action;
+    public void setUser2(User user2) {
+        this.user2 = user2;
     }
 
-    public void setUser1_action(Action user1_action) {
-        this.user1_action = user1_action;
+    public Action getUser1Action() {
+        return user1Action;
     }
 
-    public Action getUser2_action() {
-        return user2_action;
+    public void setUser1Action(Action user1Action) {
+        this.user1Action = user1Action;
     }
 
-    public void setUser2_action(Action user2_action) {
-        this.user2_action = user2_action;
+    public Action getUser2Action() {
+        return user2Action;
+    }
+
+    public void setUser2Action(Action user2Action) {
+        this.user2Action = user2Action;
     }
 }
