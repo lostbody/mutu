@@ -22,15 +22,14 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
-    @Column(nullable = false)
 
+    @Column(nullable = false)
     private String content;
-    @Column(nullable = false)
 
+    @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    public Message() {
-    }
+    public Message() {}
 
     public Message(long id, User sender, User receiver, String content, LocalDateTime timestamp) {
         this.id = id;
@@ -40,8 +39,6 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public Message(User sender, User receiver, String s, LocalDateTime now) {
-    }
     public long getId() {
         return id;
     }
@@ -71,13 +68,5 @@ public class Message {
     }
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String toJson() {
-        return "{" +
-                "\"sender\":" + sender + "," +
-                "\"content\":" + "\"" + content + "\"" + "," +
-                "\"timestamp\":" + timestamp +
-                "}";
     }
 }

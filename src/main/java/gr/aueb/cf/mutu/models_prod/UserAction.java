@@ -6,15 +6,20 @@ import jakarta.persistence.*;
 @Table(name = "user_actions")
 public class UserAction {
 
+    public enum Action {
+        SWIPE_LEFT,
+        SWIPE_RIGHT
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user1_id", nullable = false)
     private User user1;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user2_id", nullable = false)
     private User user2;
 
@@ -25,11 +30,6 @@ public class UserAction {
     @Enumerated(EnumType.STRING)
     @Column(name = "user2_action", nullable = false)
     private Action user2Action;
-
-    public enum Action {
-        SWIPE_LEFT,
-        SWIPE_RIGHT
-    }
 
     public UserAction() {}
 
