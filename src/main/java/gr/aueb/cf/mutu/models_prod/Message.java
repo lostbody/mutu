@@ -1,11 +1,8 @@
 package gr.aueb.cf.mutu.models_prod;
 
+import gr.aueb.cf.mutu.dto.MessageDto;
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "messages")
@@ -27,12 +24,11 @@ public class Message {
     private String content;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private Timestamp timestamp;
 
     public Message() {}
 
-    public Message(long id, User sender, User receiver, String content, LocalDateTime timestamp) {
-        this.id = id;
+    public Message(User sender, User receiver, String content, Timestamp timestamp) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
@@ -63,10 +59,14 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
-    public LocalDateTime getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public MessageDto toDto() {
+        return new MessageDto(id, sender.getId(), receiver.getId(), content, timestamp.getTime());
     }
 }

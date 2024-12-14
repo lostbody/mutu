@@ -1,5 +1,6 @@
 package gr.aueb.cf.mutu.models_prod;
 
+import gr.aueb.cf.mutu.dto.UserDto;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -42,13 +43,8 @@ public class User {
     )
     private Set<Interest> interests = new HashSet<>();
 
-    public Set<Interest> getInterests() {
-        return interests;
-    }
-
-    public void setInterests(Set<Interest> interests) {
-        this.interests = interests;
-    }
+    @OneToMany(mappedBy = "user")
+    private Set<Picture> pictures = new HashSet<>();
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -70,4 +66,18 @@ public class User {
     }
     public String getBio() { return bio; }
     public void setBio(String bio) { this.bio = bio; }
+    public Set<Interest> getInterests() { return interests; }
+    public void setInterests(Set<Interest> interests) {
+        this.interests = interests;
+    }
+    public Set<Picture> getPictures() {
+        return pictures;
+    }
+    public void setPictures(Set<Picture> pictures) {
+        this.pictures = pictures;
+    }
+
+    public UserDto toDto() {
+        return new UserDto(id, email, password, name, birthday, height, weight, bio);
+    }
 }

@@ -1,5 +1,6 @@
 package gr.aueb.cf.mutu.models_prod;
 
+import gr.aueb.cf.mutu.dto.PictureDto;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "pictures")
@@ -83,4 +84,6 @@ public class Picture {
     public void setUser(User user) {
         this.user = user;
     }
+
+    PictureDto toDto() { return new PictureDto(id, filename, width, height, imageData, user.getId()); }
 }

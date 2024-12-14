@@ -15,5 +15,5 @@ public interface IUserDao {
 
     UserDto getPotentialMatch(long id);
 
-    UserDto getById(int matchId);
+    UserDto getById(long matchId);
 }

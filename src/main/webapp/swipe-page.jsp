@@ -1,6 +1,5 @@
 <%@ page import="gr.aueb.cf.mutu.Authentication" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="gr.aueb.cf.mutu.dto.UserDto" %>
 <%@ page import="gr.aueb.cf.mutu.service.UserService" %>
@@ -8,6 +7,7 @@
 <%@ page import="gr.aueb.cf.mutu.service.PictureService" %>
 <%@ page import="gr.aueb.cf.mutu.dto.InterestDto" %>
 <%@ page import="gr.aueb.cf.mutu.service.InterestService" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     UserDto loggedUser = Authentication.getSessionUser(request);
@@ -19,7 +19,7 @@
     UserDto other = UserService.getImpl().getPotentialMatch(loggedUser.getId());
 
     LocalDate birthday = other.getBirthday();
-    Date today = new Date();
+    LocalDateTime today = LocalDateTime.now();
     int age = today.getYear() - birthday.getYear();
 
     List<PictureDto> pictures = PictureService.getImpl().getPicturesByUserId(other.getId());

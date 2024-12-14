@@ -1,39 +1,35 @@
 package gr.aueb.cf.mutu.models_prod;
 
+import gr.aueb.cf.mutu.dto.UserActionDto;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user_actions")
 public class UserAction {
 
-    public enum Action {
-        SWIPE_LEFT,
-        SWIPE_RIGHT
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user1_id", nullable = false)
     private User user1;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user2_id", nullable = false)
     private User user2;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user1_action", nullable = false)
-    private Action user1Action;
+    private UserActionDto.Action user1Action;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user2_action", nullable = false)
-    private Action user2Action;
+    private UserActionDto.Action user2Action;
 
     public UserAction() {}
 
-    public UserAction(User user1, User user2, Action user1Action, Action user2Action) {
+    public UserAction(User user1, User user2, UserActionDto.Action user1Action, UserActionDto.Action user2Action) {
         this.user1 = user1;
         this.user2 = user2;
         this.user1Action = user1Action;
@@ -65,19 +61,21 @@ public class UserAction {
         this.user2 = user2;
     }
 
-    public Action getUser1Action() {
+    public UserActionDto.Action getUser1Action() {
         return user1Action;
     }
 
-    public void setUser1Action(Action user1Action) {
+    public void setUser1Action(UserActionDto.Action user1Action) {
         this.user1Action = user1Action;
     }
 
-    public Action getUser2Action() {
+    public UserActionDto.Action getUser2Action() {
         return user2Action;
     }
 
-    public void setUser2Action(Action user2Action) {
+    public void setUser2Action(UserActionDto.Action user2Action) {
         this.user2Action = user2Action;
     }
+
+    public UserActionDto toDto() { return new UserActionDto(user1.getId(), user2.getId(), user1Action, user2Action); }
 }

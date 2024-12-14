@@ -21,7 +21,8 @@
     }
 
     UserDto match = UserService.getImpl().getById(matchId);
-
+    String avatar = PictureService.getImpl().getAvatarByUserId(matchId);
+    if (avatar == null) { avatar = "static/img/no-profile-pic.jpg"; }
     List<MessageDto> messages = MessageService.getImpl().getConversationByUserIds(loggedUser.getId(), matchId);
 %>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
         <div class="card-body d-flex align-items-center gap-3">
             <img
                 class="avatar rounded-circle"
-                src="<%= PictureService.getImpl().getAvatarByUserId(matchId) %>"
+                src="<%= avatar %>"
                 alt="<%= match.getName() %>"
                 title="<%= match.getName() %>"
             />

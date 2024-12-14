@@ -35,14 +35,17 @@
     </div>
 
     <div class="d-flex gap-3 flex-column mt-3">
-        <% for (UserDto match : matches) { %>
+        <% for (UserDto match : matches) {
+            String avatar = PictureService.getImpl().getAvatarByUserId(match.getId());
+            if (avatar == null) { avatar = "static/img/no-profile-pic.jpg"; }
+        %>
             <div class="border rounded p-2">
                 <a href="chat.jsp?match=<%= match.getId() %>">
                     <div class="d-flex gap-3 align-items-center">
                         <div>
                             <img
                                     class="avatar rounded-circle"
-                                    src="<%= PictureService.getImpl().getAvatarByUserId(match.getId()) %>"
+                                    src="<%= avatar %>"
                                     alt="<%= match.getName() %>"
                                     title="<%= match.getName() %>"
                             />
