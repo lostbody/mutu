@@ -8,8 +8,6 @@ import org.hibernate.Transaction;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -57,12 +55,12 @@ public class HibernateSeed {
             User userDora = new User();
             userDora.setEmail("dora@dora.com");
             userDora.setName("Dora");
-            userDora.setBirthday(LocalDate.of(1990, 8, 20));
+            userDora.setBirthday(LocalDate.of(1994, 8, 20));
             userDora.setPassword("dora");
             userDora.setHeight(170);
             userDora.setWeight(65);
-            userDora.setBio("Loremipsum");
-            userGina.setInterests(Stream.of(boardgames, dnd).collect(Collectors.toSet()));
+            userDora.setBio("this is Dora");
+            userDora.setInterests(Stream.of(boardgames, dnd, basketball).collect(Collectors.toSet()));
             session.persist(userDora);
 
             User userRodia = new User();
@@ -72,7 +70,8 @@ public class HibernateSeed {
             userRodia.setPassword("rodia");
             userRodia.setHeight(170);
             userRodia.setWeight(65);
-            userRodia.setBio("Loremipsum");
+            userRodia.setBio("this is Rodia");
+            userRodia.setInterests(Stream.of(music, tennis, boardgames, bridge, politics).collect(Collectors.toSet()));
             session.persist(userRodia);
 
             User userAndreas = new User();
@@ -82,7 +81,7 @@ public class HibernateSeed {
             userAndreas.setPassword("andreas");
             userAndreas.setHeight(170);
             userAndreas.setWeight(65);
-            userAndreas.setBio("Loremipsum");
+            userAndreas.setBio("this is Andreas");
             session.persist(userAndreas);
 
             User userKostis = new User();
@@ -116,9 +115,7 @@ public class HibernateSeed {
 
             // Create UserActions
             session.persist(new UserAction(userGina, userDora, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
-            session.persist(new UserAction(userGina, userAndreas, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
             session.persist(new UserAction(userAndreas, userDora, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
-            session.persist(new UserAction(userAndreas, userRodia, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
             session.persist(new UserAction(userAndreas, userKostis, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
 
             // Create Messages
