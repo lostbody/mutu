@@ -18,6 +18,5 @@ public class InterestDao implements IInterestDao {
                     .map(Interest::toDto)
                     .collect(Collectors.toList());
         }
-
     }
 }

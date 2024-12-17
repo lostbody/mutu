@@ -1,9 +1,5 @@
 package gr.aueb.cf.mutu.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class InterestDto {
     private final long id;
     private final String name;
