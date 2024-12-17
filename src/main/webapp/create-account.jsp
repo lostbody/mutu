@@ -3,21 +3,24 @@
 <head>
     <jsp:include page="head.jsp"/>
     <title>Create Account</title>
-    <style>
-
-    </style>
 </head>
 
 <body>
-
 <div class="container">
-
     <div class="card shadow-lg my-3">
         <div class="card-header">
             <span><strong>Create Account</strong></span>
         </div>
 
         <div class="card-body">
+            <!-- Check for error message -->
+            <% String error = request.getParameter("error"); %>
+            <% if ("emailExists".equals(error)) { %>
+            <div class="alert alert-danger">
+                This email is already in use. Please try a different one.
+            </div>
+            <% } %>
+
             <form method="POST" action="create-account" class="d-flex flex-column">
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
@@ -59,73 +62,10 @@
                     ></textarea>
                 </div>
 
-                <button class="btn btn-outline-secondary align-self-end" id="createAccountButton" type="submit">Create Account</button>
+                <button class="btn btn-outline-secondary align-self-end" type="submit">Create Account</button>
             </form>
         </div>
     </div>
-
 </div>
 </body>
-
-
-
-<script>
-
-    const email$ = document.getElementById("email")
-    const password$ = document.getElementById("password")
-    const name$ = document.getElementById("name")
-    const birthday$ = document.getElementById("birthday")
-    const height$ = document.getElementById("height")
-    const weight$ = document.getElementById("weight")
-    const bio$ = document.getElementById("bio")
-    const button$ = document.getElementById("createAccountButton")
-
-    const elements = [email$, password$, name$, birthday$, height$, weight$, bio$]
-
-    function handleAccountCreation() {
-        const params = {
-            email: email$.value,
-            password: password$.value,
-            name: name$.value,
-            birthday: birthday$.value,
-            height: height$.value,
-            weight: weight$.value,
-            bio: bio$.value
-        }
-        const formBody = new URLSearchParams(params).toString()
-
-        fetch("create-account", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formBody
-        })
-            .then(function (response) {
-                return response.json()
-            })
-            .then(function (data) {
-                if (data.error) {
-                    showError(data.error)
-                } else if (data.redirect) {
-                    window.location.href = data.redirect;
-                    ////
-                }
-            })
-    }
-
-    function showError(message) {
-        let errorElement = document.getElementById("error-message");
-        if (!errorElement) {
-            errorElement = document.createElement("span");
-            errorElement.id = "error-message";
-            errorElement.style.color = "red";
-            document.body.insertBefore(errorElement, document.body.firstChild);
-        }
-        errorElement.textContent = message;
-    }
-
-    button$.addEventListener("click", handleAccountCreation)
-
-</script>
 </html>

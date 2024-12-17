@@ -14,50 +14,34 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet("/create-account")
 public class CreateAccount extends HttpServlet {
-
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        //παίρνουμε τα πεδία της φόρμας που έχει βάλει ο UserDto και είναι πάνω στο request μέσω του getParameter
         String email = request.getParameter("email");
 
-        //checking if the email given already exists
-
+        // Check if the email already exists
         UserDto existingUser = UserService.getImpl().getByEmail(email);
-
-        //redirect with an error if the email already exists
-
-//        if (emailExists) {
-//            response.sendRedirect("create-account.jsp?error=emailExists");
-//            return;
-//        }
-
         if (existingUser != null) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 Bad Request
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Email already exists\"}");
+            // Redirect to the form with an error message
+            response.sendRedirect("create-account.jsp?error=emailExists");
             return;
         }
 
-        //continuing with getting the rest of the parameters if emailsExists=false
+        // Get the rest of the parameters
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         String birthdayStr = request.getParameter("birthday");
 
-        //τα μετατρέπω στον κατάλληλο τυπο ώστε να δημιουργησω ένα instance της κλασης UserDto κ να τα βάλω
-        //
+        // Convert the birthday string to LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate birthday = LocalDate.parse(birthdayStr, formatter);  // Convert to LocalDate
+        LocalDate birthday = LocalDate.parse(birthdayStr, formatter);
 
-
-        //δημιουργώ το instance και τα περναω μέσα και ξανατυπωνω στην κονσολα για να βεβαιωθω
+        // Create the user
         UserDto user = UserService.getImpl().createUser(email, password, name, birthday, null, null, null);
 
+        // Authenticate and start session
         Authentication.createUserSession(user, response);
 
-        // Return a success response
-        response.setStatus(HttpServletResponse.SC_OK); // 200 OK
-        response.setContentType("application/json");
-        response.getWriter().write("{\"message\": \"Account created successfully\", \"redirect\": \"swipe-page.jsp\"}");
-
+        // Redirect to swipe-page.jsp
+        response.sendRedirect("swipe-page.jsp");
     }
 }
