@@ -59,16 +59,14 @@
 <script>
 
     const password$ = document.getElementById("password")
-    const height$ = document.getElementById("height")
     const weight$ = document.getElementById("weight")
     const bio$ = document.getElementById("bio")
 
-    const elements = [password$, height$, weight$, bio$]
+    const elements = [password$, weight$, bio$]
 
     function handleInput() {
         const params = {
             password: password$.value,
-            height: height$.value,
             weight: weight$.value,
             bio: bio$.value,
         }
