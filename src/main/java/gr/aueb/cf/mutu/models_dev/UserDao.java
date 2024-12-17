@@ -48,8 +48,8 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public UserDto getById(long matchId) {
-        User user = User.getById(matchId);
+    public UserDto getById(long id) {
+        User user = User.getById(id);
         return user == null ? null : user.toDto();
     }
 }
