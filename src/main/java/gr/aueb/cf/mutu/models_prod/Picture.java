@@ -28,7 +28,6 @@ public class Picture {
 
     public Picture() {}
 
-    // Parameterized constructor
     public Picture(String filename, int width, int height, String imageData, User user) {
         this.filename = filename;
         this.width = width;

@@ -13,25 +13,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false, unique = true)
     private String email;
-
     @Column(nullable = false)
     private String name;
-
     @Column(nullable = false)
     private LocalDate birthday;
-
     @Column(nullable = false)
     private String password;
-
     @Column
     private Integer height;
-
     @Column
     private Integer weight;
-
     @Column
     private String bio;
 

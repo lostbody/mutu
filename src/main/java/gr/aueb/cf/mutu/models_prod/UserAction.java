@@ -20,11 +20,11 @@ public class UserAction {
     private User user2;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user1_action", nullable = false)
+    @Column(name = "user1_action")
     private UserActionDto.Action user1Action;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user2_action", nullable = false)
+    @Column(name = "user2_action")
     private UserActionDto.Action user2Action;
 
     public UserAction() {}
@@ -36,7 +36,6 @@ public class UserAction {
         this.user2Action = user2Action;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
