@@ -2,44 +2,34 @@ package gr.aueb.cf.mutu.endpoints;
 
 import gr.aueb.cf.mutu.Authentication;
 import gr.aueb.cf.mutu.dto.UserDto;
+import gr.aueb.cf.mutu.service.UserInterestService;
 import gr.aueb.cf.mutu.service.UserService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @WebServlet("/account-settings")
 public class AccountSettings extends HttpServlet {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         UserDto loggedUser = Authentication.getSessionUser(request);
         if (loggedUser == null) {
-            // If no user is logged in, redirect to the login page
-            response.sendRedirect("login.jsp");
+            response.setStatus(401);
             return;
         }
 
         // Retrieve updated information from the form
         String password = request.getParameter("password");
-        String heightStr = request.getParameter("height");
         String weightStr = request.getParameter("weight");
         String bio = request.getParameter("bio");
-
-        // Convert and update user fields
-        int height;
-        try {
-            height = Integer.parseInt(heightStr);
-        }
-        catch (NumberFormatException e) {
-            response.setStatus(400);
-            return;
-        }
+        String interestsStr = request.getParameter("interests");
 
         int weight;
-
         try {
             weight = Integer.parseInt(weightStr);
         }
@@ -48,14 +38,26 @@ public class AccountSettings extends HttpServlet {
             return;
         }
 
+        Set<Long> interestIds;
+        try {
+            interestIds = Arrays.stream(interestsStr.split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toSet());
+        }
+        catch (NumberFormatException e) {
+            response.setStatus(400);
+            return;
+        }
+
+
         // Update the logged user's information with the values we get from the form
         // which are retrieved from the request.getParameter... (see above)
         loggedUser.setPassword(password);
-        loggedUser.setHeight(height);
         loggedUser.setWeight(weight);
         loggedUser.setBio(bio);
-
         UserService.getImpl().updateUser(loggedUser);
+
+        UserInterestService.getImpl().setUserInterests(loggedUser.getId(), interestIds);
     }
 
 }

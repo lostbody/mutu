@@ -9,4 +9,5 @@ public interface IPictureDao {
     String getAvatarByUserId(long userId);
 
 
+    PictureDto createPicture(String filename, int width, int height, byte[] imageData, Long userId);
 }

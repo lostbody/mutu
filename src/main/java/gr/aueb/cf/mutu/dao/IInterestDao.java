@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IInterestDao {
     List<InterestDto> getInterestsByUserId(long id);
+
+    List<InterestDto> getAll();
 }

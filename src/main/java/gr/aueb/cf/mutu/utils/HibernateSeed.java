@@ -5,6 +5,7 @@ import gr.aueb.cf.mutu.models_prod.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -95,23 +96,27 @@ public class HibernateSeed {
             session.persist(userKostis);
 
             // Create Pictures
-            session.persist(new Picture("pic1", 100, 100, "static/img/gina-profile-pic.jpg",  userGina));
 
-            session.persist(new Picture("pic1", 100, 100, "static/img/rodia-profile-pic.jpg",  userRodia));
-            session.persist(new Picture("pic2", 100, 100, "static/img/rodia-pic2.jpg",  userRodia));
-            session.persist(new Picture("pic3", 100, 100, "static/img/rodia-pic3.jpg",  userRodia));
-            session.persist(new Picture("pic4", 100, 100, "static/img/rodia-pic4.jpg",  userRodia));
+            String projectDir = new File(".").getAbsolutePath() + "/";
+            String imgDir = projectDir + "img/";
 
-            session.persist(new Picture("pic1", 100, 100, "static/img/dora-profile-pic.jpg",  userDora));
-            session.persist(new Picture("pic2", 100, 100, "static/img/dora-pic2.jpg",  userDora));
-            session.persist(new Picture("pic3", 100, 100, "static/img/dora-pic3.jpg",  userDora));
-            session.persist(new Picture("pic4", 100, 100, "static/img/dora-pic4.jpg",  userDora));
+            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "gina-profile-pic.jpg").getBytes(), userGina));
 
-            session.persist(new Picture("pic1", 100, 100, "static/img/andreas-profile-pic.jpg", userAndreas));
-            session.persist(new Picture("pic2", 100, 100, "static/img/andreas-pic2.jpg", userAndreas));
-            session.persist(new Picture("pic3", 100, 100, "static/img/andreas-pic3.jpg", userAndreas));
-            session.persist(new Picture("pic4", 100, 100, "static/img/andreas-pic4.jpg", userAndreas));
-            session.persist(new Picture("pic5", 100, 100, "static/img/andreas-pic5.jpg", userAndreas));
+            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "rodia-profile-pic.jpg").getBytes(), userRodia));
+            session.persist(new Picture("pic2", 100, 100, ImageLoader.loadImage( imgDir + "rodia-pic2.jpg").getBytes(), userRodia));
+            session.persist(new Picture("pic3", 100, 100, ImageLoader.loadImage( imgDir + "rodia-pic3.jpg").getBytes(), userRodia));
+            session.persist(new Picture("pic4", 100, 100, ImageLoader.loadImage( imgDir + "rodia-pic4.jpg").getBytes(), userRodia));
+
+            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "dora-profile-pic.jpg").getBytes(), userDora));
+            session.persist(new Picture("pic2", 100, 100, ImageLoader.loadImage( imgDir + "dora-pic2.jpg").getBytes(), userDora));
+            session.persist(new Picture("pic3", 100, 100, ImageLoader.loadImage( imgDir + "dora-pic3.jpg").getBytes(), userDora));
+            session.persist(new Picture("pic4", 100, 100, ImageLoader.loadImage( imgDir + "dora-pic4.jpg").getBytes(), userDora));
+
+            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "andreas-profile-pic.jpg").getBytes(), userAndreas));
+            session.persist(new Picture("pic2", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic2.jpg").getBytes(), userAndreas));
+            session.persist(new Picture("pic3", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic3.jpg").getBytes(), userAndreas));
+            session.persist(new Picture("pic4", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic4.jpg").getBytes(), userAndreas));
+            session.persist(new Picture("pic5", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic5.jpg").getBytes(), userAndreas));
 
             // Create UserActions
             session.persist(new UserAction(userGina, userDora, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));

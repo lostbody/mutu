@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 public class Message {
     public static List<Message> messages = new ArrayList<>();
     static {
-        messages.add(new Message(1, 1, 2, "Hello there!", 12000));
-        messages.add(new Message(2, 1, 2, "How are you?", 13000));
-        messages.add(new Message(3, 2, 1, "Fine, thank you!", 14000));
-        messages.add(new Message(4, 1, 2, "Are you free tonight?", 15000));
-        messages.add(new Message(5, 3, 4, "Hello!", 15000));
-        messages.add(new Message(6, 4, 3, "How are you?", 16000));
-        messages.add(new Message(7, 5, 4, "Hi!", 16000));
-        messages.add(new Message(8, 2, 4, "How are you?", 16000));
+        messages.add(new Message(1, 2, "Hello there!", 12000));
+        messages.add(new Message(1, 2, "How are you?", 13000));
+        messages.add(new Message(2, 1, "Fine, thank you!", 14000));
+        messages.add(new Message(1, 2, "Are you free tonight?", 15000));
+        messages.add(new Message(3, 4, "Hello!", 15000));
+        messages.add(new Message(4, 3, "How are you?", 16000));
+        messages.add(new Message(5, 4, "Hi!", 16000));
+        messages.add(new Message(2, 4, "How are you?", 16000));
     }
 
     public static List<Message> getConversationByUserIds(long user1Id, long user2Id) {
@@ -39,14 +39,6 @@ public class Message {
     private final long user2;
     private final String content;
     private final long timestamp;
-
-    public Message(long id, long user1, long user2, String content, long timestamp) {
-        this.id = id;
-        this.user1 = user1;
-        this.user2 = user2;
-        this.content = content;
-        this.timestamp = timestamp;
-    }
 
     public Message(long user1, long user2, String content, long timestamp) {
         this.id = messages.size() + 1;

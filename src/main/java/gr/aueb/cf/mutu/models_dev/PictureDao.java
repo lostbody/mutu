@@ -18,4 +18,9 @@ public class PictureDao implements IPictureDao {
     public String getAvatarByUserId(long userId) {
         return Picture.getAvatarByUserId(userId);
     }
+
+    @Override
+    public PictureDto createPicture(String filename, int width, int height, byte[] imageData, Long userId) {
+        return null;
+    }
 }

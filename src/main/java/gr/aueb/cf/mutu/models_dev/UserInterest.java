@@ -8,14 +8,14 @@ public class UserInterest {
 
     public static List<UserInterest> userInterests = new ArrayList<>();
     static {
-        userInterests.add(new UserInterest(1, 1, 1));
-        userInterests.add(new UserInterest(2, 1, 2));
-        userInterests.add(new UserInterest(3, 1, 3));
-        userInterests.add(new UserInterest(4, 2, 1));
-        userInterests.add(new UserInterest(5, 3, 2));
-        userInterests.add(new UserInterest(6, 3, 1));
-        userInterests.add(new UserInterest(7, 4, 1));
-        userInterests.add(new UserInterest(8, 5, 5));
+        userInterests.add(new UserInterest(1, 1));
+        userInterests.add(new UserInterest(1, 2));
+        userInterests.add(new UserInterest(1, 3));
+        userInterests.add(new UserInterest(2, 1));
+        userInterests.add(new UserInterest(3, 2));
+        userInterests.add(new UserInterest(3, 1));
+        userInterests.add(new UserInterest(4, 1));
+        userInterests.add(new UserInterest(5, 5));
     }
 
     public static List<UserInterest> getUserInterestsByUserId(long userId) {
@@ -28,8 +28,8 @@ public class UserInterest {
     private final long userId;
     private final long interestId;
 
-    public UserInterest(long id, long userId, long interestId) {
-        this.id = id;
+    public UserInterest(long userId, long interestId) {
+        this.id = userInterests.size() + 1;
         this.userId = userId;
         this.interestId = interestId;
     }
