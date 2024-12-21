@@ -45,7 +45,7 @@
                         <div>
                             <img
                                     class="avatar rounded-circle"
-                                    src="<%= avatar %>"
+                                    src="data:image/jpeg;base64,<%= avatar %>"
                                     alt="<%= match.getName() %>"
                                     title="<%= match.getName() %>"
                             />

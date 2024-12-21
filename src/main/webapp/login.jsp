@@ -82,7 +82,7 @@
 
     <div>
         <% if (shouldShowError) { %>
-            <div>
+            <div class="m-1">
                 <span>Login Error</span>
             </div>
         <% } %>

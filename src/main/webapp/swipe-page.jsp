@@ -54,7 +54,7 @@
                 </button>
                 <div class="image-container">
                     <% for (PictureDto picture : pictures) { %>
-                    <img class="avatar d-none w-100 h-100" src="<%= picture.getBlob() %>" alt="<%= other.getName() %>"/>
+                    <img class="avatar d-none w-100 h-100" src="data:image/jpeg;base64,<%= picture.getBlob() %>" alt="<%= other.getName() %>"/>
                     <% } %>
                 </div>
                 <button id="button-right"
@@ -93,7 +93,7 @@
                 <div class="p-1 ps-0"><strong>Interests:</strong></div>
                 <div class="d-flex flex-wrap gap-2">
                     <% for (InterestDto interest : interests) { %>
-                    <span class="p-1 border rounded"><%= interest.getName() %></span>
+                        <span class="p-1 border rounded"><%= interest.getName() %></span>
                     <% } %>
                 </div>
             </div>
