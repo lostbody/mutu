@@ -100,23 +100,23 @@ public class HibernateSeed {
             String projectDir = new File(".").getAbsolutePath() + "/";
             String imgDir = projectDir + "img/";
 
-            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "gina-profile-pic.jpg").getBytes(), userGina));
+            session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "gina-profile-pic.jpg").getBytes(), 0, userGina));
 
-            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "rodia-profile-pic.jpg").getBytes(), userRodia));
-            session.persist(new Picture("pic2", 100, 100, ImageLoader.loadImage( imgDir + "rodia-pic2.jpg").getBytes(), userRodia));
-            session.persist(new Picture("pic3", 100, 100, ImageLoader.loadImage( imgDir + "rodia-pic3.jpg").getBytes(), userRodia));
-            session.persist(new Picture("pic4", 100, 100, ImageLoader.loadImage( imgDir + "rodia-pic4.jpg").getBytes(), userRodia));
+            session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "rodia-profile-pic.jpg").getBytes(), 0, userRodia));
+            session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "rodia-pic2.jpg").getBytes(), 0, userRodia));
+            session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "rodia-pic3.jpg").getBytes(), 0, userRodia));
+            session.persist(new Picture("pic4", ImageLoader.loadImage( imgDir + "rodia-pic4.jpg").getBytes(), 0, userRodia));
 
-            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "dora-profile-pic.jpg").getBytes(), userDora));
-            session.persist(new Picture("pic2", 100, 100, ImageLoader.loadImage( imgDir + "dora-pic2.jpg").getBytes(), userDora));
-            session.persist(new Picture("pic3", 100, 100, ImageLoader.loadImage( imgDir + "dora-pic3.jpg").getBytes(), userDora));
-            session.persist(new Picture("pic4", 100, 100, ImageLoader.loadImage( imgDir + "dora-pic4.jpg").getBytes(), userDora));
+            session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "dora-profile-pic.jpg").getBytes(), 0, userDora));
+            session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "dora-pic2.jpg").getBytes(), 0, userDora));
+            session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "dora-pic3.jpg").getBytes(), 0, userDora));
+            session.persist(new Picture("pic4", ImageLoader.loadImage( imgDir + "dora-pic4.jpg").getBytes(), 0, userDora));
 
-            session.persist(new Picture("pic1", 100, 100, ImageLoader.loadImage( imgDir + "andreas-profile-pic.jpg").getBytes(), userAndreas));
-            session.persist(new Picture("pic2", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic2.jpg").getBytes(), userAndreas));
-            session.persist(new Picture("pic3", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic3.jpg").getBytes(), userAndreas));
-            session.persist(new Picture("pic4", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic4.jpg").getBytes(), userAndreas));
-            session.persist(new Picture("pic5", 100, 100, ImageLoader.loadImage( imgDir + "andreas-pic5.jpg").getBytes(), userAndreas));
+            session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "andreas-profile-pic.jpg").getBytes(), 0, userAndreas));
+            session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "andreas-pic2.jpg").getBytes(), 0, userAndreas));
+            session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "andreas-pic3.jpg").getBytes(), 0, userAndreas));
+            session.persist(new Picture("pic4", ImageLoader.loadImage( imgDir + "andreas-pic4.jpg").getBytes(), 0, userAndreas));
+            session.persist(new Picture("pic5", ImageLoader.loadImage( imgDir + "andreas-pic5.jpg").getBytes(), 0, userAndreas));
 
             // Create UserActions
             session.persist(new UserAction(userGina, userDora, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));

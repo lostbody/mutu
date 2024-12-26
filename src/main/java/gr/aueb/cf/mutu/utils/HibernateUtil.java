@@ -4,22 +4,36 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
+    private static String environment = "development"; // default
 
-    static {
-        try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
+    public static void setTestEnvironment() {
+        environment = "test";
+        sessionFactory = null; // Force recreation with test config
     }
 
     public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            try {
+                Configuration configuration = new Configuration();
+
+                // Load different properties based on environment
+                if ("test".equals(environment)) {
+                    configuration.configure("hibernate-test.cfg.xml");
+                } else {
+                    configuration.configure("hibernate.cfg.xml");
+                }
+
+                sessionFactory = configuration.buildSessionFactory();
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to initialize Hibernate: " + e.getMessage(), e);
+            }
+        }
         return sessionFactory;
     }
 
     public static void shutdown() {
         getSessionFactory().close();
     }
+
 }

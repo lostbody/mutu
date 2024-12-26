@@ -53,9 +53,19 @@
 
                 </button>
                 <div class="image-container">
-                    <% for (PictureDto picture : pictures) { %>
-                    <img class="avatar d-none w-100 h-100" src="data:image/jpeg;base64,<%= picture.getBlob() %>" alt="<%= other.getName() %>"/>
-                    <% } %>
+                    <%
+                        if (pictures.size() > 0) {
+                            for (PictureDto picture : pictures) {
+                    %>
+                                <img class="avatar d-none w-100 h-100" src="data:image/jpeg;base64,<%= picture.getBlob() %>" alt="<%= other.getName() %>"/>
+                    <%
+                            }
+                        } else {
+                    %>
+                            <img class="avatar d-none w-100 h-100" src="static/img/no-profile-pic.jpg" alt="no-profile-pic"/>
+                    <%
+                        }
+                    %>
                 </div>
                 <button id="button-right"
                         class="btn btn-secondary position-absolute end-0 top-50 translate-middle-y">
@@ -63,7 +73,7 @@
                 </button>
             </div>
             <div class="mt-3 text-center">
-                <span id="pic-number">1</span>/<%= pictures.size() %>
+                <span id="pic-number">1</span>/<%= Math.max(1, pictures.size()) %>
             </div>
 
             <div class="d-flex justify-content-between">

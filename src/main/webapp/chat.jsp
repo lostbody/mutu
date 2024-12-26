@@ -54,7 +54,7 @@
             <div class="card-title"><span><%= match.getName() %></span></div>
         </div>
 
-        <div class="d-flex w-100 flex-column align-items-start p-3 pt-0">
+        <div id="conversation" class="d-flex w-100 flex-column align-items-start p-3 pt-0">
             <% for (MessageDto message : messages) {
                 String style = loggedUser.getId() == message.getUser1() ? "bg-primary align-self-end" : "bg-secondary";
             %>
@@ -64,10 +64,10 @@
             <% } %>
         </div>
 
-        <form class="d-flex p-2">
-            <input class="form-control" type="text" id="messageTyped"/>
+        <div class="d-flex p-2">
+            <input class="div-control" type="text" id="messageTyped"/>
             <button class="btn" type="button" id="sendButton">Send</button>
-        </form>
+        </div>
     </div>
 </div>
 </body>
@@ -78,7 +78,7 @@
 
     const messageTyped$ = document.getElementById("messageTyped")
     const sendButton$ = document.getElementById("sendButton")
-    const conversation$ = document.querySelector(".conversation")
+    const conversation$ = document.getElementById("conversation")
 
     const handleSendMessage = () => {
         const params = {
@@ -120,9 +120,8 @@
 
                 for (const serverMessage of messages) {
                     const messageDiv$ = document.createElement("div")
-                    const side = serverMessage.sender === matchId ? "justify-content-start" : "justify-content-end"
-                    messageDiv$.className = "d-flex" + side + "mb-2"
-                    console.log(serverMessage, matchId, side)
+                    const side = serverMessage.sender === matchId ? "bg-secondary" : "bg-primary align-self-end"
+                    messageDiv$.className = "message rounded-pill px-3 py-2 text-white my-1 " + side
                     conversation$.append(messageDiv$)
 
                     const messageSpan$ = document.createElement("span")

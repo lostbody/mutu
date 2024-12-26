@@ -20,6 +20,8 @@ public class MessageDto {
         return user1;
     }
 
+    public long getUser2() { return user2; }
+
     public String getContent() {
         return content;
     }

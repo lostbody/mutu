@@ -3,7 +3,9 @@ package gr.aueb.cf.mutu.models_prod;
 import gr.aueb.cf.mutu.dto.UserDto;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import gr.aueb.cf.mutu.models_prod.Interest;
 @Entity
@@ -37,7 +39,8 @@ public class User {
     private Set<Interest> interests = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<Picture> pictures = new HashSet<>();
+    @OrderBy("seq DESC, id ASC")
+    private List<Picture> pictures = new ArrayList<>();
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -63,10 +66,10 @@ public class User {
     public void setInterests(Set<Interest> interests) {
         this.interests = interests;
     }
-    public Set<Picture> getPictures() {
+    public List<Picture> getPictures() {
         return pictures;
     }
-    public void setPictures(Set<Picture> pictures) {
+    public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
     }
 

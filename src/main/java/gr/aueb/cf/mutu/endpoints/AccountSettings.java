@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @WebServlet("/account-settings")
 public class AccountSettings extends HttpServlet {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
         UserDto loggedUser = Authentication.getSessionUser(request);
         if (loggedUser == null) {
             response.setStatus(401);

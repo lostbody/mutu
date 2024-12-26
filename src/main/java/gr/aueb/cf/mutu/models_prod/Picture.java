@@ -2,6 +2,9 @@ package gr.aueb.cf.mutu.models_prod;
 
 import gr.aueb.cf.mutu.dto.PictureDto;
 import jakarta.persistence.*;
+
+import java.nio.charset.StandardCharsets;
+
 @Entity
 @Table(name = "pictures")
 public class Picture {
@@ -13,26 +16,23 @@ public class Picture {
     @Column(nullable = false)
     private String filename;
 
-    @Column(nullable = false)
-    private int width;
+    @Column(columnDefinition = "LONGBLOB NOT NULL")
+    private byte[] imageData;
 
     @Column(nullable = false)
-    private int height;
-
-    @Column(nullable = false)
-    private String imageData;
+    private int seq;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Picture() {}
+    public Picture() {
+    }
 
-    public Picture(String filename, int width, int height, String imageData, User user) {
+    public Picture(String filename, byte[] imageData, int seq, User user) {
         this.filename = filename;
-        this.width = width;
-        this.height = height;
         this.imageData = imageData;
+        this.seq = seq;
         this.user = user;
     }
 
@@ -52,28 +52,20 @@ public class Picture {
         this.filename = filename;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getImageData() {
+    public byte[] getImageData() {
         return imageData;
     }
 
-    public void setImageData(String imageData) {
+    public void setImageData(byte[] imageData) {
         this.imageData = imageData;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int order) {
+        this.seq = order;
     }
 
     public User getUser() {
@@ -84,5 +76,5 @@ public class Picture {
         this.user = user;
     }
 
-    PictureDto toDto() { return new PictureDto(id, filename, width, height, imageData, user.getId()); }
+    PictureDto toDto() { return new PictureDto(id, filename, new String(imageData, StandardCharsets.UTF_8), seq, user.getId()); }
 }

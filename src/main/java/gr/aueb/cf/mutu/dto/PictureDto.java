@@ -2,17 +2,15 @@ package gr.aueb.cf.mutu.dto;
 public class PictureDto {
     private final long id;
     private final String filename;
-    private final int width;
-    private final int height;
     private final String blob;
+    private int order;
     private final long userId;
 
-    public PictureDto(long id, String filename, int width, int height, String blob, long userId) {
+    public PictureDto(long id, String filename, String blob, int order, long userId) {
         this.id = id;
         this.filename = filename;
-        this.width = width;
-        this.height = height;
         this.blob = blob;
+        this.order = order;
         this.userId = userId;
     }
 
@@ -24,19 +22,25 @@ public class PictureDto {
         return filename;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public String getBlob() {
         return blob;
     }
 
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
     public long getUserId() {
         return userId;
+    }
+
+    public String toJson() {
+        return "{" +
+                "\"id\":" + id +
+                "}";
     }
 }

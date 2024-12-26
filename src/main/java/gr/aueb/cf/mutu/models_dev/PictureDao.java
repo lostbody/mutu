@@ -20,7 +20,17 @@ public class PictureDao implements IPictureDao {
     }
 
     @Override
-    public PictureDto createPicture(String filename, int width, int height, byte[] imageData, Long userId) {
+    public PictureDto createPicture(String filename, byte[] imageData, int order, Long userId) {
         return null;
+    }
+
+    @Override
+    public void deletePicture(long id) {
+
+    }
+
+    @Override
+    public void reorderPictures(long id, long id1, Direction direction) {
+
     }
 }
