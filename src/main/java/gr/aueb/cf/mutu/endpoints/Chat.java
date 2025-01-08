@@ -28,7 +28,7 @@ public class Chat extends HttpServlet {
             matchId = Integer.parseInt(request.getParameter("match"));
         }
         catch (NumberFormatException e) {
-            System.out.println("A");
+            response.setStatus(400);
             return;
         }
 

@@ -27,7 +27,7 @@ public class Login extends HttpServlet {
         //που πήραμε από τη φόρμα.Αν δεν βρεθεί user με το αυτό το username και password θα δημιουργθεί ένας
         //null user.
 
-        UserDto user = UserService.getImpl().getUserByCredentials(email, password);
+        UserDto user = Authentication.authenticateUser(email, password);
 
         //Αν βρεθεί user στη list users, αν δηλαδή "user != null", δημιουργούμε ένα string με όνομα token.
         //Δίνουμε σε αυτό το string μια random ακέραιη τιμή από το 0 έως το 999.9999

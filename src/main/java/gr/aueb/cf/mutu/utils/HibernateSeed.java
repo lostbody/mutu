@@ -1,5 +1,6 @@
 package gr.aueb.cf.mutu.utils;
 
+import gr.aueb.cf.mutu.Authentication;
 import gr.aueb.cf.mutu.dto.UserActionDto;
 import gr.aueb.cf.mutu.models_prod.*;
 import org.hibernate.Session;
@@ -23,33 +24,32 @@ public class HibernateSeed {
             Interest dnd = new Interest("dnd");
             Interest music = new Interest("music");
             Interest politics = new Interest("politics");
-            Interest basketball = new Interest("basketball");
-            Interest tennis = new Interest("tennis");
-            Interest travel = new Interest("travel");
+            Interest sports = new Interest("sports");
+            Interest travelling = new Interest("travelling");
             Interest boardgames = new Interest("boardgames");
             Interest reading = new Interest("reading");
-            Interest football = new Interest("football");
+            Interest manga = new Interest("manga");
+
 
             session.persist(bridge);
             session.persist(dnd);
             session.persist(music);
             session.persist(politics);
-            session.persist(basketball);
-            session.persist(tennis);
-            session.persist(travel);
+            session.persist(sports);
+            session.persist(travelling);
             session.persist(boardgames);
             session.persist(reading);
-            session.persist(football);
+            session.persist(manga);
 
             // Create Users
             User userGina = new User();
             userGina.setEmail("gina@gina.com");
             userGina.setName("Gina");
             userGina.setBirthday(LocalDate.of(1987, 9, 1));
-            userGina.setPassword("gina");
+            userGina.setHashedPassword(Authentication.hashPassword("gina"));
             userGina.setHeight(162);
             userGina.setWeight(58);
-            userGina.setBio("Loremipsum");
+            userGina.setBio("this is Gina");
             userGina.setInterests(Stream.of(bridge, dnd).collect(Collectors.toSet()));
             session.persist(userGina);
 
@@ -57,31 +57,31 @@ public class HibernateSeed {
             userDora.setEmail("dora@dora.com");
             userDora.setName("Dora");
             userDora.setBirthday(LocalDate.of(1994, 8, 20));
-            userDora.setPassword("dora");
+            userDora.setHashedPassword(Authentication.hashPassword("dora"));
             userDora.setHeight(170);
             userDora.setWeight(65);
             userDora.setBio("this is Dora");
-            userDora.setInterests(Stream.of(boardgames, dnd, basketball).collect(Collectors.toSet()));
+            userDora.setInterests(Stream.of(boardgames, dnd, sports).collect(Collectors.toSet()));
             session.persist(userDora);
 
             User userRodia = new User();
             userRodia.setEmail("rodia@rodia.com");
             userRodia.setName("Rodia");
-            userRodia.setBirthday(LocalDate.of(1990, 8, 20));
-            userRodia.setPassword("rodia");
+            userRodia.setBirthday(LocalDate.of(1991, 8, 20));
+            userRodia.setHashedPassword(Authentication.hashPassword("rodia"));
             userRodia.setHeight(170);
-            userRodia.setWeight(65);
+            userRodia.setWeight(75);
             userRodia.setBio("this is Rodia");
-            userRodia.setInterests(Stream.of(music, tennis, boardgames, bridge, politics).collect(Collectors.toSet()));
+            userRodia.setInterests(Stream.of(music, manga, boardgames, bridge, politics).collect(Collectors.toSet()));
             session.persist(userRodia);
 
             User userAndreas = new User();
             userAndreas.setEmail("andreas@andreas.com");
             userAndreas.setName("Andreas");
-            userAndreas.setBirthday(LocalDate.of(1990, 8, 20));
-            userAndreas.setPassword("andreas");
+            userAndreas.setBirthday(LocalDate.of(1991, 8, 20));
+            userAndreas.setHashedPassword(Authentication.hashPassword("andreas"));
             userAndreas.setHeight(170);
-            userAndreas.setWeight(65);
+            userAndreas.setWeight(70);
             userAndreas.setBio("this is Andreas");
             session.persist(userAndreas);
 
@@ -89,7 +89,7 @@ public class HibernateSeed {
             userKostis.setEmail("kostis@kostis.com");
             userKostis.setName("Kostis");
             userKostis.setBirthday(LocalDate.of(1988, 8, 20));
-            userKostis.setPassword("kostis");
+            userKostis.setHashedPassword(Authentication.hashPassword("kostis"));
             userKostis.setHeight(185);
             userKostis.setWeight(96);
             userKostis.setBio("Loremipsum");
@@ -121,18 +121,14 @@ public class HibernateSeed {
             // Create UserActions
             session.persist(new UserAction(userGina, userDora, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
             session.persist(new UserAction(userAndreas, userDora, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
-            session.persist(new UserAction(userAndreas, userKostis, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
+            session.persist(new UserAction(userAndreas, userGina, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
 
             // Create Messages
             session.persist(new Message(userGina, userAndreas, "Hi, how are you?", Timestamp.from(Instant.now())));
 
             session.persist(new Message(userGina, userDora, "Hello there!", Timestamp.from(Instant.now())));
-            session.persist(new Message(userGina, userDora, "How are you?", Timestamp.from(Instant.now())));
-            session.persist(new Message(userDora, userGina, "Fine, thank you!", Timestamp.from(Instant.now())));
             session.persist(new Message(userGina, userDora, "Are you free tonight?", Timestamp.from(Instant.now())));
-            session.persist(new Message(userRodia, userAndreas, "Hello!", Timestamp.from(Instant.now())));
-            session.persist(new Message(userAndreas, userRodia, "How are you?", Timestamp.from(Instant.now())));
-            session.persist(new Message(userKostis, userAndreas, "Hi!", Timestamp.from(Instant.now())));
+            session.persist(new Message(userAndreas, userDora, "Hi!", Timestamp.from(Instant.now())));
             session.persist(new Message(userDora, userAndreas, "How are you?", Timestamp.from(Instant.now())));
 
             transaction.commit();

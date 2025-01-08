@@ -1,7 +1,20 @@
+<%@ page import="gr.aueb.cf.mutu.dto.InterestDto" %>
+<%@ page import="java.util.List" %>
+<%@ page import="gr.aueb.cf.mutu.service.InterestService" %>
+<%
+    List<InterestDto> interests = InterestService.getImpl().getAll();
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <jsp:include page="head.jsp"/>
+    <style>
+        .selected {
+            color: white;
+            background-color: #0056b3;
+            border-color: white;
+        }
+    </style>
     <title>Create Account</title>
 </head>
 
@@ -39,7 +52,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="birthday">Birthday</label>
-                    <input class="form-control" type="date" id="birthday" name="birthday"/>
+                    <input class="form-control" type="date" id="birthday" name="birthday" required/>
                 </div>
 
                 <div class="mb-3">
@@ -50,6 +63,17 @@
                 <div class="mb-3">
                     <label class="form-label" for="weight">Weight (kg)</label>
                     <input class="form-control" type="number" id="weight" name="weight"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Interests:</label>
+                    <div class="d-flex flex-wrap gap-1">
+                        <% for (InterestDto interest : interests) { %>
+                        <div class="interest p-1 border rounded"
+                             data-id="<%= interest.getId() %>"><%= interest.getName() %>
+                        </div>
+                        <% } %>
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -68,4 +92,43 @@
     </div>
 </div>
 </body>
+<script>
+    const interests = Array.from(document.querySelectorAll(".interest"));
+    const form = document.querySelector("form");
+
+    // Add click handler for interests
+    interests.forEach(interest => {
+        interest.addEventListener("click", () => {
+            interest.classList.toggle("selected");
+        });
+    });
+
+    // Add form submit handler
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        // Add selected interests to form data
+        const selectedInterests = interests
+            .filter(interest => interest.classList.contains("selected"))
+            .map(interest => interest.dataset.id)
+            .join(",");
+
+        formData.append("interests", selectedInterests);
+
+        // Submit form data
+        fetch("create-account", {
+            method: "POST",
+            body: new URLSearchParams(formData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "swipe-page.jsp";
+                } else if (response.status === 400) {
+                    alert("Please check your input values");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
 </html>

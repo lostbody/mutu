@@ -64,7 +64,7 @@
             <% } %>
         </div>
 
-        <div class="d-flex p-2">
+        <div class="d-flex p-2 align-self-end">
             <input class="div-control" type="text" id="messageTyped"/>
             <button class="btn" type="button" id="sendButton">Send</button>
         </div>

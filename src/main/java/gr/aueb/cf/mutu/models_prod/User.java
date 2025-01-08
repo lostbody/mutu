@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import gr.aueb.cf.mutu.models_prod.Interest;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -21,8 +21,8 @@ public class User {
     private String name;
     @Column(nullable = false)
     private LocalDate birthday;
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "password", nullable = false)
+    private String hashedPassword;
     @Column
     private Integer height;
     @Column
@@ -50,8 +50,8 @@ public class User {
     public void setName(String name) { this.name = name; }
     public LocalDate getBirthday() { return birthday; }
     public void setBirthday(LocalDate birthday) { this.birthday = birthday; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public String getHashedPassword() { return hashedPassword; }
+    public void setHashedPassword(String hashedPassword) { this.hashedPassword = hashedPassword; }
     public Integer getHeight() { return height; }
     public void setHeight(Integer height) { this.height = height; }
     public Integer getWeight() {
@@ -74,6 +74,6 @@ public class User {
     }
 
     public UserDto toDto() {
-        return new UserDto(id, email, password, name, birthday, height, weight, bio);
+        return new UserDto(id, email, hashedPassword, name, birthday, height, weight, bio);
     }
 }

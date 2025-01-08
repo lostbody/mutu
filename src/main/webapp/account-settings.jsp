@@ -52,7 +52,6 @@
 
 <body>
 
-
 <div class="container">
 
     <jsp:include page="navbar.jsp"/>
@@ -79,7 +78,8 @@
 
     <div class="my-3">
         <label class="form-label" for="password">Password:</label>
-        <input class="form-control" type="password" id="password" name="password" value="<%=loggedUser.getPassword()%>" required/>
+        <input class="form-control" type="password" id="password" name="password"
+               value="<%=loggedUser.getHashedPassword()%>" required/>
     </div>
 
     <div class="mb-3">
@@ -90,10 +90,10 @@
     <div class="mb-3">
         <label class="form-label" for="bio">Bio:</label>
         <textarea class="form-control"
-                id="bio"
-                name="bio"
-                rows="4"
-                placeholder="Tell us about yourself..."><%=loggedUser.getBio() %></textarea>
+                  id="bio"
+                  name="bio"
+                  rows="4"
+                  placeholder="Tell us about yourself..."><%=loggedUser.getBio() %></textarea>
     </div>
 
     <div class="mb-3">
@@ -103,7 +103,9 @@
                 boolean isSelected = userInterests.stream().anyMatch(x -> x.getId() == interest.getId());
                 String selected = isSelected ? "selected" : "";
             %>
-                <div class="interest p-1 border rounded <%= selected %>" data-id="<%= interest.getId() %>"><%= interest.getName() %></div>
+            <div class="interest p-1 border rounded <%= selected %>"
+                 data-id="<%= interest.getId() %>"><%= interest.getName() %>
+            </div>
             <% } %>
         </div>
     </div>
@@ -134,12 +136,22 @@
         const formBody = new URLSearchParams(params).toString()
 
         fetch("account-settings", {
-            method: "PUT",
+            method: "POST",
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formBody,
         })
+        .then(response => {
+            if (response.ok) {
+                console.log('Update successful');
+            } else {
+                console.error('Update failed with status:', response.status);
+            }
+        })
+        .catch(error => {
+             console.error('Error:', error);
+        });
     }
 
     for (const input$ of inputs) {
@@ -169,7 +181,9 @@
     const movePicture = (picture, direction) => {
         const pictureIndex = pictures.indexOf(picture)
         const otherIndex = direction === "left" ? pictureIndex - 1 : pictureIndex + 1
-        if (otherIndex === -1 || otherIndex === pictures.length) { return }
+        if (otherIndex === -1 || otherIndex === pictures.length) {
+            return
+        }
 
         if (direction === "left") {
             pictures$.insertBefore(pictures[pictureIndex].element$, pictures[otherIndex].element$)
@@ -195,12 +209,12 @@
     const pictures$ = document.getElementById("pictures")
     const pictures = [
         <% for (PictureDto pictureDto : pictures) { %>
-            {
-                id: <%= pictureDto.getId() %>,
-                data: "<%= pictureDto.getBlob() %>",
-                filename: "<%= pictureDto.getFilename() %>",
-                element$: null,
-            },
+        {
+            id: <%= pictureDto.getId() %>,
+            data: "<%= pictureDto.getBlob() %>",
+            filename: "<%= pictureDto.getFilename() %>",
+            element$: null,
+        },
         <% } %>
     ]
 

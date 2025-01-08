@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class UserDao implements IUserDao {
 
@@ -32,19 +33,6 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public UserDto getUserByCredentials(String email, String password) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            NativeQuery<User> query = session.createNativeQuery("""
-                SELECT * FROM users WHERE email = :email AND password = :password
-            """, User.class);
-            query.setParameter("email", email);
-            query.setParameter("password", password);
-            User user = query.uniqueResult();
-            return user == null ? null : user.toDto();
-        }
-    }
-
-    @Override
     public UserDto createUser(String email, String password, String name, LocalDate birthday, Integer height, Integer weight, String bio) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -52,21 +40,23 @@ public class UserDao implements IUserDao {
 
             User user = new User();
             user.setEmail(email);
-            user.setPassword(password);
+            user.setHashedPassword(password);
             user.setName(name);
             user.setBirthday(birthday);
             user.setHeight(height);
             user.setWeight(weight);
             user.setBio(bio);
+
             session.persist(user);
 
             transaction.commit();
 
             System.out.println(
-                    "Created user " + user.getId()
+                    "Created user with height" + user.getHeight()
             );
 
             return user.toDto();
+
         } catch (Exception e) {
             if (transaction != null) { transaction.rollback(); }
             throw e;
@@ -84,7 +74,7 @@ public class UserDao implements IUserDao {
                 throw new IllegalArgumentException("User not found.");
             }
 
-            user.setPassword(userDto.getPassword());
+            user.setHashedPassword(userDto.getHashedPassword());
             user.setWeight(userDto.getWeight());
             user.setBio(userDto.getBio());
             session.merge(user);

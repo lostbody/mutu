@@ -1,20 +1,24 @@
 package gr.aueb.cf.mutu.dto;
+import gr.aueb.cf.mutu.models_dev.Interest;
+
 import java.time.LocalDate;
+import java.util.Set;
+
 public class UserDto {
 
     private final long id;
     private final String email;
     private final String name;
     private final LocalDate birthday;
-    private String password;
+    private String hashedPassword;
     private Integer height;
     private Integer weight;
     private String bio;
 
-    public UserDto(long id, String email, String password, String name, LocalDate birthday, Integer height, Integer weight, String bio) {
+    public UserDto(long id, String email, String hashedPassword, String name, LocalDate birthday, Integer height, Integer weight, String bio) {
         this.id = id;
         this.email = email;
-        this.password = password;
+        this.hashedPassword = hashedPassword;
         this.name = name;
         this.birthday = birthday;
         this.height = height;
@@ -30,12 +34,12 @@ public class UserDto {
         return email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public String getName() {
@@ -75,7 +79,7 @@ public class UserDto {
         return "UserDto{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + hashedPassword + '\'' +
                 ", name='" + name + '\'' +
                 ", birthday=" + birthday +
                 ", height=" + height +

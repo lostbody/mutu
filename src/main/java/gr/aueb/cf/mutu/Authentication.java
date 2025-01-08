@@ -1,9 +1,11 @@
 package gr.aueb.cf.mutu;
 
 import gr.aueb.cf.mutu.dto.UserDto;
+import gr.aueb.cf.mutu.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -16,6 +18,19 @@ public class Authentication {
 
     //Στo hashmap sessions αποθηκεύουμε (user-token), δηλαδή όλους τους users
     //που έχουν κάνει login μαζί με ένα token που τους δώσαμε όταν έκαναν login.
+
+    public static boolean verifyPassword(UserDto user, String plainTextPassword) {
+        return BCrypt.checkpw(plainTextPassword, user.getHashedPassword());
+    }
+
+    public static String hashPassword(String plainTextPassword) {
+        return  BCrypt.hashpw(plainTextPassword, BCrypt.gensalt(12) );
+    }
+
+    public static UserDto authenticateUser(String email, String plainTextPassword) {
+        UserDto user = UserService.getImpl().getByEmail(email);
+        return user != null && verifyPassword(user, plainTextPassword) ? user : null;
+    }
 
     public static UserDto getSessionUser(HttpServletRequest request) {
         UserDto loggedUser = null;
@@ -34,12 +49,6 @@ public class Authentication {
                 loggedUser = Authentication.sessions.get(token);
                 break;
             }
-        }
-
-        if (loggedUser == null) {
-            System.out.println("UserDto not found in sessions.");
-        } else {
-            System.out.println("Found user: " + loggedUser.getEmail());
         }
 
         return loggedUser;
