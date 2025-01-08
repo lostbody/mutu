@@ -7,7 +7,7 @@ public class PictureService {
     static IPictureDao pictureDao;
 
     static {
-        String config = System.getProperty("config");
+        String config = System.getenv("MUTU_CONFIG");
         switch (config) {
             case "dev": {
                 pictureDao = new gr.aueb.cf.mutu.models_dev.PictureDao();
