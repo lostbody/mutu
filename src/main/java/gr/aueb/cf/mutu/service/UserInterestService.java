@@ -5,7 +5,7 @@ public class UserInterestService {
     static IUserInterestDao userInterestDao;
 
     static {
-        String config = System.getenv("MUTU_CONFIG");
+        String config = System.getProperty("config");
         switch (config) {
             case "dev": {
                 userInterestDao = new gr.aueb.cf.mutu.models_dev.UserInterestDao();

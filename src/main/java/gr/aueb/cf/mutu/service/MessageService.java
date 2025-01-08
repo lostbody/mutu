@@ -6,7 +6,7 @@ public class MessageService {
     static IMessageDao messageDao;
 
     static {
-        String config = System.getenv("MUTU_CONFIG");
+        String config = System.getProperty("config");
         switch (config) {
             case "dev": {
                 messageDao = new gr.aueb.cf.mutu.models_dev.MessageDao();

@@ -6,7 +6,7 @@ public class UserService {
     static IUserDao userDao;
 
     static {
-        String config = System.getenv("MUTU_CONFIG");
+        String config = System.getProperty("config");
         switch (config) {
             case "dev": {
                 userDao = new gr.aueb.cf.mutu.models_dev.UserDao();

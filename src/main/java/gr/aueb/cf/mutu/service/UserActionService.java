@@ -5,7 +5,7 @@ public class UserActionService {
     static IUserActionDao userActionDao;
 
     static {
-        String config = System.getenv("MUTU_CONFIG");
+        String config = System.getProperty("config");
         switch (config) {
             case "dev": {
                 userActionDao = new gr.aueb.cf.mutu.models_dev.UserActionDao();
