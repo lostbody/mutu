@@ -75,7 +75,7 @@
             <button id="upload" class="btn btn-outline-secondary">Upload</button>
         </div>
     </div>
-    
+
     <div class="mb-3">
         <label class="form-label" for="weight">Weight (kg):</label>
         <input class="form-control" type="number" id="weight" name="weight" value="<%=loggedUser.getWeight()%>"/>
@@ -108,11 +108,10 @@
 
 <script>
 
-    const password$ = document.getElementById("password")
     const weight$ = document.getElementById("weight")
     const bio$ = document.getElementById("bio")
 
-    const inputs = [password$, weight$, bio$]
+    const inputs = [weight$, bio$]
 
     const interests = Array.from(document.querySelectorAll(".interest"))
     const images = Array.from(document.querySelectorAll(".photo"))
@@ -120,7 +119,6 @@
 
     const updateUser = () => {
         const params = {
-            password: password$.value,
             weight: weight$.value,
             bio: bio$.value,
             interests: interests

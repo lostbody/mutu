@@ -51,10 +51,6 @@ public class UserDao implements IUserDao {
 
             transaction.commit();
 
-            System.out.println(
-                    "Created user with height" + user.getHeight()
-            );
-
             return user.toDto();
 
         } catch (Exception e) {
@@ -111,7 +107,7 @@ public class UserDao implements IUserDao {
             """, User.class);
             query.setParameter("userId", userId);
             User user = query.uniqueResult();
-            return user.toDto();
+            return user != null ? user.toDto() : null;
         }
     }
 }

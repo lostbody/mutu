@@ -9,7 +9,7 @@ public class HibernateUtil {
 
     public static void setTestEnvironment() {
         environment = "test";
-        sessionFactory = null; // Force recreation with test config
+        sessionFactory = null;
     }
 
     public static SessionFactory getSessionFactory() {
@@ -17,7 +17,6 @@ public class HibernateUtil {
             try {
                 Configuration configuration = new Configuration();
 
-                // Load different properties based on environment
                 if ("test".equals(environment)) {
                     configuration.configure("hibernate-test.cfg.xml");
                 } else {

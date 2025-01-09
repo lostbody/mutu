@@ -4,9 +4,9 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mutudb</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">7ae18ad3</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mutudb?createDatabaseIfNotExist=true</property>
+    <property name="hibernate.connection.username">mutuuser</property>
+    <property name="hibernate.connection.password">mutupass</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
