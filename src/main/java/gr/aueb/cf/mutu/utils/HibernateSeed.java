@@ -58,8 +58,8 @@ public class HibernateSeed {
             userDora.setName("Dora");
             userDora.setBirthday(LocalDate.of(1994, 8, 20));
             userDora.setHashedPassword(Authentication.hashPassword("dora"));
-            userDora.setHeight(170);
-            userDora.setWeight(65);
+            userDora.setHeight(160);
+            userDora.setWeight(60);
             userDora.setBio("this is Dora");
             userDora.setInterests(Stream.of(boardgames, dnd, sports).collect(Collectors.toSet()));
             session.persist(userDora);
@@ -83,17 +83,30 @@ public class HibernateSeed {
             userAndreas.setHeight(170);
             userAndreas.setWeight(70);
             userAndreas.setBio("this is Andreas");
+            userAndreas.setInterests(Stream.of(sports, boardgames, bridge, politics).collect(Collectors.toSet()));
             session.persist(userAndreas);
 
-            User userKostis = new User();
-            userKostis.setEmail("kostis@kostis.com");
-            userKostis.setName("Kostis");
-            userKostis.setBirthday(LocalDate.of(1988, 8, 20));
-            userKostis.setHashedPassword(Authentication.hashPassword("kostis"));
-            userKostis.setHeight(185);
-            userKostis.setWeight(96);
-            userKostis.setBio("Loremipsum");
-            session.persist(userKostis);
+            User userAnna = new User();
+            userAnna.setEmail("anna@anna.com");
+            userAnna.setName("Anna");
+            userAnna.setBirthday(LocalDate.of(1990, 10, 16));
+            userAnna.setHashedPassword(Authentication.hashPassword("anna"));
+            userAnna.setHeight(174);
+            userAnna.setWeight(55);
+            userAnna.setBio("this is Anna");
+            userAnna.setInterests(Stream.of(music, manga, reading, politics).collect(Collectors.toSet()));
+            session.persist(userAnna);
+
+            User userAlex = new User();
+            userAlex.setEmail("alex@alex.com");
+            userAlex.setName("Alex");
+            userAlex.setBirthday(LocalDate.of(1991, 6, 26));
+            userAlex.setHashedPassword(Authentication.hashPassword("alex"));
+            userAlex.setHeight(174);
+            userAlex.setWeight(70);
+            userAlex.setBio("this is Alex");
+            userAlex.setInterests(Stream.of(dnd, reading, boardgames, bridge, politics).collect(Collectors.toSet()));
+            session.persist(userAlex);
 
             // Create Pictures
 
@@ -104,19 +117,25 @@ public class HibernateSeed {
 
             session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "rodia-profile-pic.jpg").getBytes(), 0, userRodia));
             session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "rodia-pic2.jpg").getBytes(), 0, userRodia));
-            session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "rodia-pic3.jpg").getBytes(), 0, userRodia));
             session.persist(new Picture("pic4", ImageLoader.loadImage( imgDir + "rodia-pic4.jpg").getBytes(), 0, userRodia));
 
             session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "dora-profile-pic.jpg").getBytes(), 0, userDora));
             session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "dora-pic2.jpg").getBytes(), 0, userDora));
             session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "dora-pic3.jpg").getBytes(), 0, userDora));
-            session.persist(new Picture("pic4", ImageLoader.loadImage( imgDir + "dora-pic4.jpg").getBytes(), 0, userDora));
 
             session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "andreas-profile-pic.jpg").getBytes(), 0, userAndreas));
             session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "andreas-pic2.jpg").getBytes(), 0, userAndreas));
             session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "andreas-pic3.jpg").getBytes(), 0, userAndreas));
             session.persist(new Picture("pic4", ImageLoader.loadImage( imgDir + "andreas-pic4.jpg").getBytes(), 0, userAndreas));
             session.persist(new Picture("pic5", ImageLoader.loadImage( imgDir + "andreas-pic5.jpg").getBytes(), 0, userAndreas));
+
+            session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "anna-pic1.jpg").getBytes(), 0, userAnna));
+            session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "anna-pic2.jpg").getBytes(), 0, userAnna));
+            session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "anna-pic3.jpg").getBytes(), 0, userAnna));
+
+            session.persist(new Picture("pic1", ImageLoader.loadImage( imgDir + "alex-pic1.jpg").getBytes(), 0, userAlex));
+            session.persist(new Picture("pic2", ImageLoader.loadImage( imgDir + "alex-pic2.jpg").getBytes(), 0, userAlex));
+            session.persist(new Picture("pic3", ImageLoader.loadImage( imgDir + "alex-pic3.jpg").getBytes(), 0, userAlex));
 
             // Create UserActions
             session.persist(new UserAction(userGina, userDora, UserActionDto.Action.SWIPE_RIGHT, UserActionDto.Action.SWIPE_RIGHT));
@@ -132,6 +151,7 @@ public class HibernateSeed {
             session.persist(new Message(userDora, userAndreas, "How are you?", Timestamp.from(Instant.now())));
 
             transaction.commit();
+
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();

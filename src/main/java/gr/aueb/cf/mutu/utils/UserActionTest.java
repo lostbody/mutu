@@ -35,10 +35,9 @@ public class UserActionTest {
     public static void testUpdateSwipe() {
         UserActionDao userActionDao = new UserActionDao();
 
-        // Retrieve existing swipe
-        UserActionDto swipe = userActionDao.getByUserIds(1L, 2L); // Gina and Dora
+        UserActionDto swipe = userActionDao.getByUserIds(1L, 2L);
         if (swipe != null) {
-            swipe.setUser2_action(UserActionDto.Action.SWIPE_LEFT); // Update action
+            swipe.setUser2_action(UserActionDto.Action.SWIPE_LEFT);
             userActionDao.updateUserAction(swipe);
             System.out.println("Updated Swipe Action: " + swipe);
         } else {
@@ -50,7 +49,7 @@ public class UserActionTest {
         UserActionDao userActionDao = new UserActionDao();
 
         // Fetch matches for Gina
-        List<UserDto> matches = userActionDao.getMatchesByUserId(1L); // Gina's ID
+        List<UserDto> matches = userActionDao.getMatchesByUserId(1L);
         System.out.println("Matches for Gina:");
         matches.forEach(match -> System.out.println(match.getName()));
     }

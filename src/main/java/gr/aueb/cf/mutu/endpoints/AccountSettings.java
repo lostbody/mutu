@@ -24,7 +24,6 @@ public class AccountSettings extends HttpServlet {
             return;
         }
 
-        String password = request.getParameter("password");
         String weightStr = request.getParameter("weight");
         String bio = request.getParameter("bio");
         String interestsStr = request.getParameter("interests");
@@ -50,8 +49,6 @@ public class AccountSettings extends HttpServlet {
             }
         }
 
-
-        loggedUser.setHashedPassword(password);
         loggedUser.setWeight(weight);
         loggedUser.setBio(bio);
         UserService.getImpl().updateUser(loggedUser);
