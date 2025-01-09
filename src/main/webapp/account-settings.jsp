@@ -75,13 +75,7 @@
             <button id="upload" class="btn btn-outline-secondary">Upload</button>
         </div>
     </div>
-
-    <div class="my-3">
-        <label class="form-label" for="password">Password:</label>
-        <input class="form-control" type="password" id="password" name="password"
-               value="<%=loggedUser.getHashedPassword()%>" required/>
-    </div>
-
+    
     <div class="mb-3">
         <label class="form-label" for="weight">Weight (kg):</label>
         <input class="form-control" type="number" id="weight" name="weight" value="<%=loggedUser.getWeight()%>"/>
