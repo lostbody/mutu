@@ -19,7 +19,7 @@ Mutu is a dating web application built with Java, JSP, Hibernate, and MySQL. The
 
 ### 1. Clone the Repository
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/lostbody/mutu.git
 cd mutu
 ```
 
