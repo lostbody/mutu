@@ -23,6 +23,7 @@
 <html lang="en">
 <head>
     <jsp:include page="head.jsp"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <title>Account Settings</title>
 
     <style>
@@ -39,6 +40,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .img-standard {
@@ -47,6 +49,40 @@
             object-fit: cover;
             object-position: center;
         }
+
+        .image-controls {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .image-controls .btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .img-container:hover .btn {
+            opacity: 1;
+        }
+
     </style>
 </head>
 
@@ -222,24 +258,24 @@
         container$.appendChild(image$)
 
         const controls$ = document.createElement("div")
-        controls$.classList.add("position-absolute")
+        controls$.classList.add("image-controls")
         container$.appendChild(controls$)
 
         const buttonDelete$ = document.createElement("div")
-        buttonDelete$.classList.add("btn", "btn-outline-secondary")
-        buttonDelete$.textContent = "X"
+        buttonDelete$.classList.add("btn", "btn-outline-secondary", "delete-btn")
+        buttonDelete$.innerHTML = '<i class="fa-solid fa-times"></i>'
         buttonDelete$.addEventListener("click", () => deletePicture(picture))
-        controls$.appendChild(buttonDelete$)
+        container$.appendChild(buttonDelete$)
 
         const buttonLeft$ = document.createElement("div")
         buttonLeft$.classList.add("btn", "btn-outline-secondary")
-        buttonLeft$.textContent = "<"
+        buttonLeft$.innerHTML = '<i class="fa-solid fa-chevron-left"></i>'
         buttonLeft$.addEventListener("click", () => movePicture(picture, "left"))
         controls$.appendChild(buttonLeft$)
 
         const buttonRight$ = document.createElement("div")
         buttonRight$.classList.add("btn", "btn-outline-secondary")
-        buttonRight$.textContent = ">"
+        buttonRight$.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
         buttonRight$.addEventListener("click", () => movePicture(picture, "right"))
         controls$.appendChild(buttonRight$)
 

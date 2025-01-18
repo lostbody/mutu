@@ -49,7 +49,7 @@ public class HibernateSeed {
             userGina.setHashedPassword(Authentication.hashPassword("gina"));
             userGina.setHeight(162);
             userGina.setWeight(58);
-            userGina.setBio("this is Gina");
+            userGina.setBio("Looking for laughs and a little adventure.");
             userGina.setInterests(Stream.of(bridge, dnd).collect(Collectors.toSet()));
             session.persist(userGina);
 
@@ -60,7 +60,7 @@ public class HibernateSeed {
             userDora.setHashedPassword(Authentication.hashPassword("dora"));
             userDora.setHeight(160);
             userDora.setWeight(60);
-            userDora.setBio("this is Dora");
+            userDora.setBio("Big fan of movies and lazy Sundays.");
             userDora.setInterests(Stream.of(boardgames, dnd, sports).collect(Collectors.toSet()));
             session.persist(userDora);
 
@@ -71,7 +71,7 @@ public class HibernateSeed {
             userRodia.setHashedPassword(Authentication.hashPassword("rodia"));
             userRodia.setHeight(170);
             userRodia.setWeight(75);
-            userRodia.setBio("this is Rodia");
+            userRodia.setBio("Always up for a walk or trying new food.");
             userRodia.setInterests(Stream.of(music, manga, boardgames, bridge, politics).collect(Collectors.toSet()));
             session.persist(userRodia);
 
@@ -82,7 +82,7 @@ public class HibernateSeed {
             userAndreas.setHashedPassword(Authentication.hashPassword("andreas"));
             userAndreas.setHeight(170);
             userAndreas.setWeight(70);
-            userAndreas.setBio("this is Andreas");
+            userAndreas.setBio("    Hopeless romantic with a sarcastic sense of humor and a weakness for puppies.");
             userAndreas.setInterests(Stream.of(sports, boardgames, bridge, politics).collect(Collectors.toSet()));
             session.persist(userAndreas);
 
@@ -93,7 +93,7 @@ public class HibernateSeed {
             userAnna.setHashedPassword(Authentication.hashPassword("anna"));
             userAnna.setHeight(174);
             userAnna.setWeight(55);
-            userAnna.setBio("this is Anna");
+            userAnna.setBio("Enjoy quiet nights and great conversations.");
             userAnna.setInterests(Stream.of(music, manga, reading, politics).collect(Collectors.toSet()));
             session.persist(userAnna);
 
@@ -104,7 +104,7 @@ public class HibernateSeed {
             userAlex.setHashedPassword(Authentication.hashPassword("alex"));
             userAlex.setHeight(174);
             userAlex.setWeight(70);
-            userAlex.setBio("this is Alex");
+            userAlex.setBio("Loves trying new cuisines and exploring hidden gems in the city.");
             userAlex.setInterests(Stream.of(dnd, reading, boardgames, bridge, politics).collect(Collectors.toSet()));
             session.persist(userAlex);
 
