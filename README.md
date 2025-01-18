@@ -1,12 +1,26 @@
 # Mutu - A Dating Web Application
 
 ## Project Overview
-Mutu is a dating web application built with Java, JSP, Hibernate, and MySQL. The application allows users to:
-- Create and manage their profiles
-- Upload and manage profile pictures
-- View potential matches
-- Swipe left/right on other users
-- Chat with their matches
+Mutu is a demo project for a dating web application, built with Java, JSP, Hibernate, and MySQL.
+It implements core features similar to popular dating apps.
+
+## Key Features
+
+### User Management
+* Secure user authentication and session handling
+* Profile customization (basic info, attributes, interests, bio)
+* Multiple profile pictures with reordering capability
+
+### Match System & Communication
+* Swipe-based matching system
+* Real-time messaging between matched users
+* Timestamp-based message history
+
+## Technical Stack
+* **Backend**: Java Servlets
+* **Database**: MySQL, Hibernate ORM
+* **Security**: BCrypt password hashing, secure cookie sessions
+* **Frontend**: JSP, Bootstrap
 
 ## Prerequisites
 - Java Development Kit (JDK) 17 or higher
