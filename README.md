@@ -25,7 +25,7 @@ cd mutu
 
 ### 2. Initialize Database
 1. Install MySQL if you haven't already
-2. Run the initialization script at `src/main/resources/db_init.sql`
+2. Run the sql script at `src/main/resources/db_init.sql` to create the database and user.
 3. Run the HibernateSeed class (located in gr.aueb.cf.mutu.utils package) to populate the database with sample data.
 
 ### 3. Build the Project
@@ -76,8 +76,8 @@ http://localhost:8080/mutu
 - Email: dora@dora.com / Password: dora
 - Email: rodia@rodia.com / Password: rodia
 - Email: andreas@andreas.com / Password: andreas
-- Email: anna@anna.com / Password: Anna
-- Email: alex@alex.com / Password: Anna
+- Email: anna@anna.com / Password: anna
+- Email: alex@alex.com / Password: alex
 
 ## Project Structure
 - `src/main/java/gr/aueb/cf/mutu/` - Main source code
