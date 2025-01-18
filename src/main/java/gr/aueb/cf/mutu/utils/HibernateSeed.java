@@ -82,7 +82,7 @@ public class HibernateSeed {
             userAndreas.setHashedPassword(Authentication.hashPassword("andreas"));
             userAndreas.setHeight(170);
             userAndreas.setWeight(70);
-            userAndreas.setBio("    Hopeless romantic with a sarcastic sense of humor and a weakness for puppies.");
+            userAndreas.setBio("Hopeless romantic with a sarcastic sense of humor and a weakness for dogs.");
             userAndreas.setInterests(Stream.of(sports, boardgames, bridge, politics).collect(Collectors.toSet()));
             session.persist(userAndreas);
 
