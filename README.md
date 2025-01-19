@@ -48,7 +48,7 @@ Build the project using Maven:
 mvn clean package
 ```
 
-### 5. Configure Tomcat
+### 4. Configure Tomcat
 1. Before deploying, configure Tomcat to run the application in production mode:
 
 #### Windows:
@@ -71,7 +71,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -Dconfig=prod"
 chmod +x bin/setenv.sh
 ```
 
-### 6. Deploy the Application
+### 5. Deploy the Application
 1. Copy the generated WAR file to Tomcat's webapps directory:
 ```bash
 cp target/mutu-1.0-SNAPSHOT.war [tomcat-installation-path]/webapps/mutu.war
